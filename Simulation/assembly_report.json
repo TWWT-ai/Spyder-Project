@@ -1,0 +1,425 @@
+{
+  "units": "metres",
+  "parts": [
+    {
+      "name": "joint_cross",
+      "source": "meshes/Joints/joint_cross.stl",
+      "link": "coxa_link",
+      "triangles": 17270,
+      "bounds_m": [
+        [
+          0.01873745279531249,
+          -0.033251076123046876,
+          -0.03325353342285157
+        ],
+        [
+          0.02467268228750001,
+          0.033254850390625,
+          0.0332529515625
+        ]
+      ]
+    },
+    {
+      "name": "yaw_bottom",
+      "source": "meshes/Joints/joint_bottom.stl",
+      "link": "coxa_link",
+      "triangles": 976,
+      "bounds_m": [
+        [
+          -0.012330200642968749,
+          -0.011627996605468751,
+          0.0268
+        ],
+        [
+          0.029457604532812497,
+          0.01162799704687501,
+          0.036102399826049805
+        ]
+      ]
+    },
+    {
+      "name": "yaw_top",
+      "source": "meshes/Joints/joint_top.stl",
+      "link": "coxa_link",
+      "triangles": 952,
+      "bounds_m": [
+        [
+          -0.02092158551288523,
+          -0.01169999775937498,
+          -0.03615999984741211
+        ],
+        [
+          0.029457602073176915,
+          0.01170000224062501,
+          -0.026799999999999997
+        ]
+      ]
+    },
+    {
+      "name": "pitch_bottom",
+      "source": "meshes/Joints/joint_bottom2.stl",
+      "link": "coxa_link",
+      "triangles": 976,
+      "bounds_m": [
+        [
+          0.013953600667187488,
+          0.0268,
+          -0.011627996605468751
+        ],
+        [
+          0.05574140584296873,
+          0.036102399826049805,
+          0.01162799704687501
+        ]
+      ]
+    },
+    {
+      "name": "pitch_top",
+      "source": "meshes/Joints/joint_top2.stl",
+      "link": "coxa_link",
+      "triangles": 952,
+      "bounds_m": [
+        [
+          0.013953603126823068,
+          -0.03615999984741211,
+          -0.01169999775937498
+        ],
+        [
+          0.06433279071288521,
+          -0.026799999999999997,
+          0.01170000224062501
+        ]
+      ]
+    },
+    {
+      "name": "thigh_motor",
+      "source": "meshes/Thigh Design.stl",
+      "link": "base_link",
+      "triangles": 46989,
+      "bounds_m": [
+        [
+          -0.03799999952416992,
+          -0.009999999771484398,
+          -0.015399981232421851
+        ],
+        [
+          0.016499998568481444,
+          0.010000000228515602,
+          0.030800000457031275
+        ]
+      ]
+    },
+    {
+      "name": "thigh_bottom",
+      "source": "meshes/Thigh Design.stl",
+      "link": "base_link",
+      "triangles": 1538,
+      "bounds_m": [
+        [
+          -0.043314597742187516,
+          -0.0175,
+          -0.02139998122999998
+        ],
+        [
+          0.018201393468749983,
+          0.0175,
+          0.01060001877000002
+        ]
+      ]
+    },
+    {
+      "name": "thigh_top",
+      "source": "meshes/Thigh Design.stl",
+      "link": "base_link",
+      "triangles": 980,
+      "bounds_m": [
+        [
+          -0.03815239178125,
+          -0.017500892662025536,
+          0.014599979193115231
+        ],
+        [
+          0.023925260196289058,
+          0.017500970708978457,
+          0.02660001161804199
+        ]
+      ]
+    },
+    {
+      "name": "leg_bottom",
+      "source": "meshes/Leg/leg_bottom.stl",
+      "link": "femur_link",
+      "triangles": 7612,
+      "bounds_m": [
+        [
+          -0.017995136177968787,
+          -0.019400000005444337,
+          -0.017501460078125093
+        ],
+        [
+          0.09457499321656246,
+          0.012599999517718504,
+          0.017498539921874907
+        ]
+      ]
+    },
+    {
+      "name": "leg_top",
+      "source": "meshes/Leg/leg_top.stl",
+      "link": "femur_link",
+      "triangles": 1814,
+      "bounds_m": [
+        [
+          -0.017997369554150624,
+          0.014599999869018554,
+          -0.01750093497848357
+        ],
+        [
+          0.09457361860126388,
+          0.02360021349206543,
+          0.017500935032216006
+        ]
+      ]
+    },
+    {
+      "name": "Motor",
+      "source": "meshes/Leg/Motor.stl",
+      "link": "femur_link",
+      "triangles": 47599,
+      "bounds_m": [
+        [
+          -0.016499999568481447,
+          -0.015400000000000006,
+          -0.009999997977050782
+        ],
+        [
+          0.03799999852416992,
+          0.030799996948242182,
+          0.009999998208251952
+        ]
+      ]
+    },
+    {
+      "name": "Motor2",
+      "source": "meshes/Leg/Motor2.stl",
+      "link": "femur_link",
+      "triangles": 47599,
+      "bounds_m": [
+        [
+          0.038576248685829984,
+          -0.015400000000000006,
+          -0.009999998208251952
+        ],
+        [
+          0.09307624677848135,
+          0.030799996948242182,
+          0.009999997977050782
+        ]
+      ]
+    },
+    {
+      "name": "foot_bottom",
+      "source": "meshes/foot_bottom.stl",
+      "link": "tibia_link",
+      "triangles": 1196,
+      "bounds_m": [
+        [
+          -0.014372842917480469,
+          0.02631047668457032,
+          -0.015921154975891114
+        ],
+        [
+          0.10813281046386719,
+          0.032310476684570315,
+          0.015921154975891114
+        ]
+      ]
+    },
+    {
+      "name": "foot_top",
+      "source": "meshes/foot_top.stl",
+      "link": "tibia_link",
+      "triangles": 1343,
+      "bounds_m": [
+        [
+          -0.024149690756835922,
+          -0.025599999999999998,
+          -0.015
+        ],
+        [
+          0.1081328104638672,
+          -0.01959764251708984,
+          0.015005195617675781
+        ]
+      ]
+    },
+    {
+      "name": "foot_ground",
+      "source": "meshes/foot_ground.stl",
+      "link": "tibia_link",
+      "triangles": 2028,
+      "bounds_m": [
+        [
+          0.036132911951234574,
+          -0.023711343383789055,
+          -0.005813491821289062
+        ],
+        [
+          0.1603327192465821,
+          0.03042182006835938,
+          0.0033219947814941407
+        ]
+      ]
+    },
+    {
+      "name": "foot_tip",
+      "source": "meshes/foot_tip.stl",
+      "link": "tibia_link",
+      "triangles": 1372,
+      "bounds_m": [
+        [
+          0.1549327268036273,
+          -0.0032322822570800725,
+          -0.009347248077392577
+        ],
+        [
+          0.16693272489627867,
+          0.009942758941650396,
+          0.009347248077392577
+        ]
+      ]
+    }
+  ],
+  "sources": {
+    "meshes/Joints/joint_cross.stl": "576940ddafe3771367678e7bf73a2a4accdb2627e01c747e1d3b12cc8b5aeca7",
+    "meshes/Joints/joint_bottom.stl": "1d0a77a52a7e4213a6530994184eb0669707602f45da4b18fe7636235794c928",
+    "meshes/Joints/joint_top.stl": "bde64c3e2151b5d25660cbf38308dfa38c93416538e589fdcf75065a1bf17c79",
+    "meshes/Joints/joint_bottom2.stl": "1d0a77a52a7e4213a6530994184eb0669707602f45da4b18fe7636235794c928",
+    "meshes/Joints/joint_top2.stl": "bde64c3e2151b5d25660cbf38308dfa38c93416538e589fdcf75065a1bf17c79",
+    "meshes/Thigh Design.stl": "5541e7ab47cbb71f55e2dd51dc283d914489c673dcee2cc7a48d238665c08190",
+    "meshes/Leg/leg_bottom.stl": "e961da8f1cc40e6cc17da7fa0b1508bf6ce1c2b6f639a93b2ebb84f57caec1a5",
+    "meshes/Leg/leg_top.stl": "c4fee96ee6c5dcd59fe092e84604f7dfc22d9e746bb9a61b823eca84ee750a8c",
+    "meshes/Leg/Motor.stl": "13635d85435f1367dff109746ae0b3e9f08294d5a860ee66fc00a304fc8775b2",
+    "meshes/Leg/Motor2.stl": "13635d85435f1367dff109746ae0b3e9f08294d5a860ee66fc00a304fc8775b2",
+    "meshes/foot_bottom.stl": "4f90cd27c44745c97b76b78eeb5a78c9c1a08804bc273075a0aced41dfa2f45e",
+    "meshes/foot_top.stl": "97b5fa8830309ddc06058f4564427829ea79e0ae1892f03c9a2a681715537dee",
+    "meshes/foot_ground.stl": "b5f84ba28a5fc019b720496e7aeec45feac712e7cdf9217e9880cfa1a2741f2c",
+    "meshes/foot_tip.stl": "adcda715defa29847ad9dbcef7bc617a0bcc060fe605d56ce641e716f16ef5c3"
+  },
+  "assumptions": [
+    "Assembly follows user-supplied Foot Design, Leg design3 and Thigh Design reference thumbnails. Leg Designs1/2 are excluded. Original source STLs are preserved.",
+    "User identified servo as probably MG996R or similar. Original servo geometry is retained; model identity remains unconfirmed.",
+    "Joint hardware scaled0.1 physically; top joint X additionally scaled0.974359. These are fitting corrections, separate from mm-to-m conversion.",
+    "Leg cover X/Y fitted to lower-shell screw holes; approximately1mm case/opening mismatch remains from source distortions.",
+    "Foot ground X scaled0.990517; foot opposed shaft holes retain0.132810mm X mismatch when distal tabs align.",
+    "Leg and thigh use a rear cradle and output-side top frame, connected by long fasteners as shown in the reference. Six smooth-shank fasteners are illustrative; exact screw specifications were not supplied.",
+    "Previous rear adapter and short spacers were removed because the reference does not show them. The blue coupling still has5.4mm rear-pivot clearance; its actual bearing/fastener arrangement is unresolved.",
+    "Entire foot moved axially to give0.2mm nominal clearance to leg cradle rear face; no internal foot-piece transforms changed.",
+    "All masses, inertias, torque settings, joint limits and collision boxes are illustrative. Default mode is kinematic and does not validate collisions, load capacity or walking.",
+    "Detailed servo spline geometry stays in the casing visual; separate horns/fasteners are absent. Joint axes, not spline teeth, define motion."
+  ],
+  "generated_supports": [
+    {
+      "name": "thigh_through_bolt_1",
+      "link": "base_link",
+      "bounds_m": [
+        [
+          -0.0130266,
+          -0.016771281292110207,
+          -0.0214
+        ],
+        [
+          -0.006626599999999999,
+          -0.011228718707889796,
+          0.023600000000000003
+        ]
+      ],
+      "note": "Simplified long through-fastener shown in assembled reference. Hole axis is measured;3mm smooth shank and hex end sizes are illustrative. Threads are not modelled."
+    },
+    {
+      "name": "thigh_through_bolt_2",
+      "link": "base_link",
+      "bounds_m": [
+        [
+          -0.0130266,
+          0.011228718707889796,
+          -0.0214
+        ],
+        [
+          -0.006626599999999999,
+          0.016771281292110203,
+          0.023600000000000003
+        ]
+      ],
+      "note": "Simplified long through-fastener shown in assembled reference. Hole axis is measured;3mm smooth shank and hex end sizes are illustrative. Threads are not modelled."
+    },
+    {
+      "name": "leg_through_bolt_1",
+      "link": "femur_link",
+      "bounds_m": [
+        [
+          0.0069244784478897665,
+          -0.0194,
+          -0.0172
+        ],
+        [
+          0.012467041032110176,
+          0.023600000000000003,
+          -0.0108
+        ]
+      ],
+      "note": "Simplified long through-fastener shown in assembled reference. Hole axis is measured;3mm smooth shank and hex end sizes are illustrative. Threads are not modelled."
+    },
+    {
+      "name": "leg_through_bolt_2",
+      "link": "femur_link",
+      "bounds_m": [
+        [
+          0.0069244784478897665,
+          -0.0194,
+          0.0108
+        ],
+        [
+          0.012467041032110176,
+          0.023600000000000003,
+          0.0172
+        ]
+      ],
+      "note": "Simplified long through-fastener shown in assembled reference. Hole axis is measured;3mm smooth shank and hex end sizes are illustrative. Threads are not modelled."
+    },
+    {
+      "name": "leg_through_bolt_3",
+      "link": "femur_link",
+      "bounds_m": [
+        [
+          0.06410915844788972,
+          -0.0194,
+          -0.0172
+        ],
+        [
+          0.06965172103211013,
+          0.023600000000000003,
+          -0.0108
+        ]
+      ],
+      "note": "Simplified long through-fastener shown in assembled reference. Hole axis is measured;3mm smooth shank and hex end sizes are illustrative. Threads are not modelled."
+    },
+    {
+      "name": "leg_through_bolt_4",
+      "link": "femur_link",
+      "bounds_m": [
+        [
+          0.06410915844788972,
+          -0.0194,
+          0.0108
+        ],
+        [
+          0.06965172103211013,
+          0.023600000000000003,
+          0.0172
+        ]
+      ],
+      "note": "Simplified long through-fastener shown in assembled reference. Hole axis is measured;3mm smooth shank and hex end sizes are illustrative. Threads are not modelled."
+    }
+  ]
+}

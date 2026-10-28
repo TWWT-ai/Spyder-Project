@@ -1,0 +1,138 @@
+{
+  "parts": {
+    "thigh_motor": {
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "translation_mm": [
+        5.422894,
+        333.241791,
+        -432.466418
+      ]
+    },
+    "thigh_bottom": {
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "translation_mm": [
+        -343.778587,
+        -272.5,
+        -309.39998123
+      ]
+    },
+    "thigh_top": {
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "scale": [
+        1,
+        0.999000999000999,
+        1
+      ],
+      "translation_mm": [
+        -149.519091,
+        912.4225774225774,
+        44.98365
+      ]
+    }
+  },
+  "interpretation": "User assembled Thigh Design thumbnail: cradle below motor back; top frame above flange; long vertical fasteners. Supersedes front-side clamp interpretation.",
+  "measured_planes_mm": {
+    "motor_back": -15.39998123,
+    "cradle_inside_floor": -15.39998123,
+    "cradle_outside_floor": -21.39998123,
+    "cradle_screw_post_top": -9.39998123,
+    "motor_flange_upper": 14.6,
+    "cover_inner": 14.6,
+    "cover_outer": 20.6
+  },
+  "through_fasteners": {
+    "axes_xy_mm": [
+      [
+        -9.8266,
+        -14
+      ],
+      [
+        -9.8266,
+        14
+      ]
+    ],
+    "clear_span_between_post_and_cover_mm": 23.99998123,
+    "shank_extent_mm": [
+      -21.39998123,
+      23.6
+    ],
+    "illustrative_radius_mm": 1.5,
+    "note": "Two long through-fasteners visible in reference. Diameter and final length unconfirmed; extent permits a head below the cradle and nut above cover. No Screw STL provided."
+  },
+  "remove_previous_generated_parts": [
+    "yaw_rear_pivot_adapter",
+    "thigh_clamp_spacer_1",
+    "thigh_clamp_spacer_2"
+  ],
+  "evidence": [
+    "Reference visibly separates lower cradle and top cover across full motor body; previously proposed short collar is contradicted.",
+    "Servo source back face Z417.06643677 maps to -15.39998123; cradle source inner floor Z294 maps to same plane.",
+    "Servo flange upper source Z447.0664 maps to +14.6; cover source underside Z-30.38365 maps to same plane.",
+    "Lower through-hole axes source X333.951965,Y258.5/286.5 map to X-9.826622,Y\u00b114.",
+    "Upper hole axes source X139.692504,Y-927.349/-899.321 align after 0.999000999 Y fit; raw mismatch was only0.014mm per side.",
+    "No change to the motor geometry or output axis is required."
+  ],
+  "limitations": [
+    "The lower blue coupling inner face at Z-26.8 remains5.400019mm below the cradle outer floor; the thumbnail does not show joint coupling hardware and does not justify inventing a backingplate/hub.",
+    "Thigh guide tops at source Z320 lie4mm below cover underside; this is not evidence that the entire cover should be placed on the output side alongside the lower holder.",
+    "Reference is a small thumbnail; fastening specs and real clearances still require confirmation."
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "decision": "Retain the four internal foot assembly transforms. The newly supplied Foot Design thumbnail matches the existing assembly when viewed with the common servo axis vertical.",
+  "reference_scope": "Latest user Fusion data-panel thumbnail, Foot Design only. Leg Designs 1 and 2 are excluded.",
+  "preview": "analysis/reference_fit/foot_reference_orientation.png",
+  "common_view_rotation_only": [[1,0,0],[0,0,-1],[0,1,0]],
+  "verified_link_frame_features_mm": {
+    "distal_sideplate_bar_x_interval": [97.33280741210937,102.73280741210938],
+    "distal_ground_brace_bar_x_interval": [97.33280741210937,102.73280741210938],
+    "ground_notch_floor_y": [26.8,-19.1104766845703],
+    "sideplate_inside_gap": 45.91047668457031,
+    "sideplate_thickness": 6.0,
+    "shaft_centres": [[0,29.8,0],[0.1328104638672,-22.1104766845703,0]],
+    "shaft_x_mismatch": 0.1328104638672
+  },
+  "geometry_evidence": [
+    "The side plates are parallel. Rotating the complete foot to vertical shaft orientation gives the upper/lower plate arrangement visible in the reference.",
+    "The distal brace and sideplate crossbar intervals coincide exactly under the existing transforms.",
+    "The brace notch floors coincide with the sideplate inner faces; the two interfaces are 45.9105 mm apart.",
+    "The triangular brace reaches beyond the sideplate ends to the pad, matching the reference topology.",
+    "Pad fingers face back toward the leg and straddle the brace sheet."
+  ],
+  "limits": [
+    "The thumbnail is too small to certify every small notch or fastener clearance.",
+    "The existing 0.990517 ground X fit correction and 0.132810 mm opposing shaft mismatch remain provisional.",
+    "A common axial translation of the whole foot may be needed to fit the corrected leg housing; that is separate from its internal assembly."
+  ]
+}

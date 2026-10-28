@@ -1,0 +1,8 @@
+.venv/
+.publish/
+__pycache__/
+*.pyc
+analysis/.mplconfig/
+analysis/**/.mplconfig/
+analysis/*.log
+analysis/*.pid

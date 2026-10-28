@@ -1,0 +1,558 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot name="assembled_single_leg">
+  <link name="base_link">
+    <visual name="invisible_frame">
+      <geometry>
+        <sphere radius="0.000000001" />
+      </geometry>
+      <material name="base_link_invisible">
+        <color rgba="0 0 0 0" />
+      </material>
+    </visual>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="0.1" />
+      <inertia ixx="3.541666666666667e-05" iyy="5.520833333333333e-05" izz="4.020833333333334e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <collision>
+      <origin xyz="-0.01 0 0.005" rpy="0 0 0" />
+      <geometry>
+        <box size="0.04 0.02 0.039" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="coxa_link">
+    <visual name="invisible_frame">
+      <geometry>
+        <sphere radius="0.000000001" />
+      </geometry>
+      <material name="coxa_link_invisible">
+        <color rgba="0 0 0 0" />
+      </material>
+    </visual>
+    <inertial>
+      <origin xyz="0.0217 0 0" rpy="0 0 0" />
+      <mass value="0.045" />
+      <inertia ixx="3.2670000000000004e-05" iyy="2.571e-05" izz="2.571e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <collision>
+      <origin xyz="0.0217 0 0.029" rpy="0 0 0" />
+      <geometry>
+        <box size="0.006 0.042 0.005" />
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.0217 0 -0.029" rpy="0 0 0" />
+      <geometry>
+        <box size="0.006 0.042 0.005" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="femur_link">
+    <visual name="invisible_frame">
+      <geometry>
+        <sphere radius="0.000000001" />
+      </geometry>
+      <material name="femur_link_invisible">
+        <color rgba="0 0 0 0" />
+      </material>
+    </visual>
+    <inertial>
+      <origin xyz="0.0382881236 0 0" rpy="0 0 0" />
+      <mass value="0.145" />
+      <inertia ixx="4.264208333333333e-05" iyy="0.00016909416666666666" izz="0.00018213208333333331" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <collision>
+      <origin xyz="0.01075 0.004 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.04 0.038 0.02" />
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.06582624721 0.004 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.04 0.038 0.02" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="tibia_link">
+    <visual name="invisible_frame">
+      <geometry>
+        <sphere radius="0.000000001" />
+      </geometry>
+      <material name="tibia_link_invisible">
+        <color rgba="0 0 0 0" />
+      </material>
+    </visual>
+    <inertial>
+      <origin xyz="0.085 0.003355238342 0" rpy="0 0 0" />
+      <mass value="0.045" />
+      <inertia ixx="1.6455e-05" iyy="0.000128055" izz="0.00013682999999999998" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <collision>
+      <origin xyz="0.085 0.003355238342 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.15 0.006 0.006" />
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.164 0.003355238342 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.006 0.012 0.016" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="joint_cross_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="joint_cross">
+      <geometry>
+        <mesh filename="meshes/assembled/joint_cross.stl" scale="1 1 1" />
+      </geometry>
+      <material name="joint_cross_color">
+        <color rgba="0.18 0.42 0.72 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="joint_cross_attachment" type="fixed">
+    <parent link="coxa_link" />
+    <child link="joint_cross_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="yaw_bottom_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="yaw_bottom">
+      <geometry>
+        <mesh filename="meshes/assembled/yaw_bottom.stl" scale="1 1 1" />
+      </geometry>
+      <material name="yaw_bottom_color">
+        <color rgba="0.18 0.42 0.72 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="yaw_bottom_attachment" type="fixed">
+    <parent link="coxa_link" />
+    <child link="yaw_bottom_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="yaw_top_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="yaw_top">
+      <geometry>
+        <mesh filename="meshes/assembled/yaw_top.stl" scale="1 1 1" />
+      </geometry>
+      <material name="yaw_top_color">
+        <color rgba="0.18 0.42 0.72 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="yaw_top_attachment" type="fixed">
+    <parent link="coxa_link" />
+    <child link="yaw_top_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="pitch_bottom_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="pitch_bottom">
+      <geometry>
+        <mesh filename="meshes/assembled/pitch_bottom.stl" scale="1 1 1" />
+      </geometry>
+      <material name="pitch_bottom_color">
+        <color rgba="0.18 0.42 0.72 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="pitch_bottom_attachment" type="fixed">
+    <parent link="coxa_link" />
+    <child link="pitch_bottom_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="pitch_top_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="pitch_top">
+      <geometry>
+        <mesh filename="meshes/assembled/pitch_top.stl" scale="1 1 1" />
+      </geometry>
+      <material name="pitch_top_color">
+        <color rgba="0.18 0.42 0.72 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="pitch_top_attachment" type="fixed">
+    <parent link="coxa_link" />
+    <child link="pitch_top_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="thigh_motor_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="thigh_motor">
+      <geometry>
+        <mesh filename="meshes/assembled/thigh_motor.stl" scale="1 1 1" />
+      </geometry>
+      <material name="thigh_motor_color">
+        <color rgba="0.19 0.22 0.26 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="thigh_motor_attachment" type="fixed">
+    <parent link="base_link" />
+    <child link="thigh_motor_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="thigh_bottom_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="thigh_bottom">
+      <geometry>
+        <mesh filename="meshes/assembled/thigh_bottom.stl" scale="1 1 1" />
+      </geometry>
+      <material name="thigh_bottom_color">
+        <color rgba="0.05 0.43 0.46 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="thigh_bottom_attachment" type="fixed">
+    <parent link="base_link" />
+    <child link="thigh_bottom_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="thigh_top_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="thigh_top">
+      <geometry>
+        <mesh filename="meshes/assembled/thigh_top.stl" scale="1 1 1" />
+      </geometry>
+      <material name="thigh_top_color">
+        <color rgba="0.12 0.78 0.83 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="thigh_top_attachment" type="fixed">
+    <parent link="base_link" />
+    <child link="thigh_top_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="leg_bottom_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="leg_bottom">
+      <geometry>
+        <mesh filename="meshes/assembled/leg_bottom.stl" scale="1 1 1" />
+      </geometry>
+      <material name="leg_bottom_color">
+        <color rgba="0.05 0.43 0.46 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="leg_bottom_attachment" type="fixed">
+    <parent link="femur_link" />
+    <child link="leg_bottom_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="leg_top_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="leg_top">
+      <geometry>
+        <mesh filename="meshes/assembled/leg_top.stl" scale="1 1 1" />
+      </geometry>
+      <material name="leg_top_color">
+        <color rgba="0.12 0.78 0.83 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="leg_top_attachment" type="fixed">
+    <parent link="femur_link" />
+    <child link="leg_top_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="Motor_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="Motor">
+      <geometry>
+        <mesh filename="meshes/assembled/Motor.stl" scale="1 1 1" />
+      </geometry>
+      <material name="Motor_color">
+        <color rgba="0.19 0.22 0.26 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="Motor_attachment" type="fixed">
+    <parent link="femur_link" />
+    <child link="Motor_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="Motor2_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="Motor2">
+      <geometry>
+        <mesh filename="meshes/assembled/Motor2.stl" scale="1 1 1" />
+      </geometry>
+      <material name="Motor2_color">
+        <color rgba="0.19 0.22 0.26 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="Motor2_attachment" type="fixed">
+    <parent link="femur_link" />
+    <child link="Motor2_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="foot_bottom_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="foot_bottom">
+      <geometry>
+        <mesh filename="meshes/assembled/foot_bottom.stl" scale="1 1 1" />
+      </geometry>
+      <material name="foot_bottom_color">
+        <color rgba="0.92 0.48 0.12 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="foot_bottom_attachment" type="fixed">
+    <parent link="tibia_link" />
+    <child link="foot_bottom_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="foot_top_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="foot_top">
+      <geometry>
+        <mesh filename="meshes/assembled/foot_top.stl" scale="1 1 1" />
+      </geometry>
+      <material name="foot_top_color">
+        <color rgba="0.92 0.48 0.12 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="foot_top_attachment" type="fixed">
+    <parent link="tibia_link" />
+    <child link="foot_top_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="foot_ground_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="foot_ground">
+      <geometry>
+        <mesh filename="meshes/assembled/foot_ground.stl" scale="1 1 1" />
+      </geometry>
+      <material name="foot_ground_color">
+        <color rgba="0.92 0.48 0.12 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="foot_ground_attachment" type="fixed">
+    <parent link="tibia_link" />
+    <child link="foot_ground_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="foot_tip_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="foot_tip">
+      <geometry>
+        <mesh filename="meshes/assembled/foot_tip.stl" scale="1 1 1" />
+      </geometry>
+      <material name="foot_tip_color">
+        <color rgba="0.19 0.22 0.26 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="foot_tip_attachment" type="fixed">
+    <parent link="tibia_link" />
+    <child link="foot_tip_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="thigh_through_bolt_1_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="thigh_through_bolt_1">
+      <geometry>
+        <mesh filename="meshes/assembled/thigh_through_bolt_1.stl" scale="1 1 1" />
+      </geometry>
+      <material name="thigh_through_bolt_1_color">
+        <color rgba="0.48 0.51 0.55 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="thigh_through_bolt_1_attachment" type="fixed">
+    <parent link="base_link" />
+    <child link="thigh_through_bolt_1_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="thigh_through_bolt_2_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="thigh_through_bolt_2">
+      <geometry>
+        <mesh filename="meshes/assembled/thigh_through_bolt_2.stl" scale="1 1 1" />
+      </geometry>
+      <material name="thigh_through_bolt_2_color">
+        <color rgba="0.48 0.51 0.55 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="thigh_through_bolt_2_attachment" type="fixed">
+    <parent link="base_link" />
+    <child link="thigh_through_bolt_2_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="leg_through_bolt_1_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="leg_through_bolt_1">
+      <geometry>
+        <mesh filename="meshes/assembled/leg_through_bolt_1.stl" scale="1 1 1" />
+      </geometry>
+      <material name="leg_through_bolt_1_color">
+        <color rgba="0.48 0.51 0.55 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="leg_through_bolt_1_attachment" type="fixed">
+    <parent link="femur_link" />
+    <child link="leg_through_bolt_1_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="leg_through_bolt_2_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="leg_through_bolt_2">
+      <geometry>
+        <mesh filename="meshes/assembled/leg_through_bolt_2.stl" scale="1 1 1" />
+      </geometry>
+      <material name="leg_through_bolt_2_color">
+        <color rgba="0.48 0.51 0.55 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="leg_through_bolt_2_attachment" type="fixed">
+    <parent link="femur_link" />
+    <child link="leg_through_bolt_2_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="leg_through_bolt_3_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="leg_through_bolt_3">
+      <geometry>
+        <mesh filename="meshes/assembled/leg_through_bolt_3.stl" scale="1 1 1" />
+      </geometry>
+      <material name="leg_through_bolt_3_color">
+        <color rgba="0.48 0.51 0.55 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="leg_through_bolt_3_attachment" type="fixed">
+    <parent link="femur_link" />
+    <child link="leg_through_bolt_3_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="leg_through_bolt_4_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="leg_through_bolt_4">
+      <geometry>
+        <mesh filename="meshes/assembled/leg_through_bolt_4.stl" scale="1 1 1" />
+      </geometry>
+      <material name="leg_through_bolt_4_color">
+        <color rgba="0.48 0.51 0.55 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="leg_through_bolt_4_attachment" type="fixed">
+    <parent link="femur_link" />
+    <child link="leg_through_bolt_4_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <joint name="coxa_yaw" type="revolute">
+    <parent link="base_link" />
+    <child link="coxa_link" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit lower="-1.0471975511965976" upper="1.0471975511965976" effort="0.5" velocity="2.0" />
+    <dynamics damping="0.05" friction="0" />
+  </joint>
+  <joint name="femur_pitch" type="revolute">
+    <parent link="coxa_link" />
+    <child link="femur_link" />
+    <origin xyz="0.0434112052 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-0.8726646259971648" upper="1.2217304763960306" effort="0.5" velocity="2.0" />
+    <dynamics damping="0.05" friction="0" />
+  </joint>
+  <joint name="tibia_pitch" type="revolute">
+    <parent link="femur_link" />
+    <child link="tibia_link" />
+    <origin xyz="0.07657624721 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.2217304763960306" upper="1.4835298641951802" effort="0.5" velocity="2.0" />
+    <dynamics damping="0.05" friction="0" />
+  </joint>
+  <link name="foot_tip">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+  </link>
+  <joint name="foot_tip_fixed" type="fixed">
+    <parent link="tibia_link" />
+    <child link="foot_tip" />
+    <origin xyz="0.1669327268 0.003355238342 0" rpy="0 0 0" />
+  </joint>
+</robot>

@@ -1,0 +1,1250 @@
+{
+  "units": "millimetres for source and fitting coordinates; kilograms for mass",
+  "transform": "link_vertex_m=(rotation @ (scale * source_vertex_mm) + translation_mm)/1000",
+  "assumptions": [
+    "Assembly follows user-supplied Foot Design, Leg design3 and Thigh Design reference thumbnails. Leg Designs1/2 are excluded. Original source STLs are preserved.",
+    "User identified servo as probably MG996R or similar. Original servo geometry is retained; model identity remains unconfirmed.",
+    "Joint hardware scaled0.1 physically; top joint X additionally scaled0.974359. These are fitting corrections, separate from mm-to-m conversion.",
+    "Leg cover X/Y fitted to lower-shell screw holes; approximately1mm case/opening mismatch remains from source distortions.",
+    "Foot ground X scaled0.990517; foot opposed shaft holes retain0.132810mm X mismatch when distal tabs align.",
+    "Leg and thigh use a rear cradle and output-side top frame, connected by long fasteners as shown in the reference. Six smooth-shank fasteners are illustrative; exact screw specifications were not supplied.",
+    "Previous rear adapter and short spacers were removed because the reference does not show them. The blue coupling still has5.4mm rear-pivot clearance; its actual bearing/fastener arrangement is unresolved.",
+    "Entire foot moved axially to give0.2mm nominal clearance to leg cradle rear face; no internal foot-piece transforms changed.",
+    "All masses, inertias, torque settings, joint limits and collision boxes are illustrative. Default mode is kinematic and does not validate collisions, load capacity or walking.",
+    "Detailed servo spline geometry stays in the casing visual; separate horns/fasteners are absent. Joint axes, not spline teeth, define motion."
+  ],
+  "links": {
+    "base_link": {
+      "mass_kg": 0.1,
+      "com_mm": [
+        0,
+        0,
+        0
+      ],
+      "inertia_box_mm": [
+        60,
+        35,
+        55
+      ],
+      "collision_boxes": [
+        {
+          "center_mm": [
+            -10,
+            0,
+            5
+          ],
+          "size_mm": [
+            40,
+            20,
+            39
+          ]
+        }
+      ]
+    },
+    "coxa_link": {
+      "mass_kg": 0.045,
+      "com_mm": [
+        21.7,
+        0,
+        0
+      ],
+      "inertia_box_mm": [
+        50,
+        66,
+        66
+      ],
+      "collision_boxes": [
+        {
+          "center_mm": [
+            21.7,
+            0,
+            29
+          ],
+          "size_mm": [
+            6,
+            42,
+            5
+          ]
+        },
+        {
+          "center_mm": [
+            21.7,
+            0,
+            -29
+          ],
+          "size_mm": [
+            6,
+            42,
+            5
+          ]
+        }
+      ]
+    },
+    "femur_link": {
+      "mass_kg": 0.145,
+      "com_mm": [
+        38.28812360499995,
+        0,
+        0
+      ],
+      "inertia_box_mm": [
+        113,
+        48,
+        35
+      ],
+      "collision_boxes": [
+        {
+          "center_mm": [
+            10.75,
+            4,
+            0
+          ],
+          "size_mm": [
+            40,
+            38,
+            20
+          ]
+        },
+        {
+          "center_mm": [
+            65.8262472099999,
+            4,
+            0
+          ],
+          "size_mm": [
+            40,
+            38,
+            20
+          ]
+        }
+      ]
+    },
+    "tibia_link": {
+      "mass_kg": 0.045,
+      "com_mm": [
+        85,
+        3.3552383422851584,
+        0
+      ],
+      "inertia_box_mm": [
+        182,
+        58,
+        32
+      ],
+      "collision_boxes": [
+        {
+          "center_mm": [
+            85,
+            3.3552383422851584,
+            0
+          ],
+          "size_mm": [
+            150,
+            6,
+            6
+          ]
+        },
+        {
+          "center_mm": [
+            164,
+            3.3552383422851584,
+            0
+          ],
+          "size_mm": [
+            6,
+            12,
+            16
+          ]
+        }
+      ]
+    }
+  },
+  "joints": [
+    {
+      "name": "coxa_yaw",
+      "parent": "base_link",
+      "child": "coxa_link",
+      "origin_mm": [
+        0,
+        0,
+        0
+      ],
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "limits_deg": [
+        -60,
+        60
+      ]
+    },
+    {
+      "name": "femur_pitch",
+      "parent": "coxa_link",
+      "child": "femur_link",
+      "origin_mm": [
+        43.4112052,
+        0,
+        0
+      ],
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "limits_deg": [
+        -50,
+        70
+      ]
+    },
+    {
+      "name": "tibia_pitch",
+      "parent": "femur_link",
+      "child": "tibia_link",
+      "origin_mm": [
+        76.5762472099999,
+        0,
+        0
+      ],
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "limits_deg": [
+        -70,
+        85
+      ]
+    }
+  ],
+  "foot_contact_mm": [
+    166.9327268036273,
+    3.3552383422851584,
+    0
+  ],
+  "parts": [
+    {
+      "name": "joint_cross",
+      "source": "meshes/Joints/joint_cross.stl",
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "scale": [
+        0.1,
+        0.1,
+        0.1
+      ],
+      "translation_mm": [
+        -136.5239974,
+        24.000700000000002,
+        -22.569900000000004
+      ],
+      "link": "coxa_link",
+      "color": [
+        0.18,
+        0.42,
+        0.72,
+        1
+      ],
+      "fit_note": "Scale 0.1 inferred from matching 5.933mm ring slab, plate fork slots, 4.8mm recess depth; not a unit conversion."
+    },
+    {
+      "name": "yaw_bottom",
+      "source": "meshes/Joints/joint_bottom.stl",
+      "rotation": [
+        [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "scale": [
+        0.1,
+        0.1,
+        0.1
+      ],
+      "translation_mm": [
+        180.1002559,
+        -117.07468850000001,
+        29.8
+      ],
+      "link": "coxa_link",
+      "color": [
+        0.18,
+        0.42,
+        0.72,
+        1
+      ],
+      "fit_note": "Four plates all rigid with ring. Top X scale additionally corrected 2.564% so hex bore and opposing servo bore share an axis; slot fit retains approximately 0.15mm clearance."
+    },
+    {
+      "name": "yaw_top",
+      "source": "meshes/Joints/joint_top.stl",
+      "rotation": [
+        [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      ],
+      "scale": [
+        0.09743590823245794,
+        0.1,
+        0.1
+      ],
+      "translation_mm": [
+        117.54223817319638,
+        118.98569560000001,
+        -39.8
+      ],
+      "link": "coxa_link",
+      "color": [
+        0.18,
+        0.42,
+        0.72,
+        1
+      ],
+      "fit_note": "Four plates all rigid with ring. Top X scale additionally corrected 2.564% so hex bore and opposing servo bore share an axis; slot fit retains approximately 0.15mm clearance."
+    },
+    {
+      "name": "pitch_bottom",
+      "source": "meshes/Joints/joint_bottom2.stl",
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          -1.0,
+          0.0
+        ]
+      ],
+      "scale": [
+        0.1,
+        0.1,
+        0.1
+      ],
+      "translation_mm": [
+        -136.68905070000002,
+        29.8,
+        -117.07468850000001
+      ],
+      "link": "coxa_link",
+      "color": [
+        0.18,
+        0.42,
+        0.72,
+        1
+      ],
+      "fit_note": "Four plates all rigid with ring. Top X scale additionally corrected 2.564% so hex bore and opposing servo bore share an axis; slot fit retains approximately 0.15mm clearance."
+    },
+    {
+      "name": "pitch_top",
+      "source": "meshes/Joints/joint_top2.stl",
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "scale": [
+        0.09743590823245794,
+        0.1,
+        0.1
+      ],
+      "translation_mm": [
+        -74.1310329731964,
+        -39.8,
+        118.98569560000001
+      ],
+      "link": "coxa_link",
+      "color": [
+        0.18,
+        0.42,
+        0.72,
+        1
+      ],
+      "fit_note": "Four plates all rigid with ring. Top X scale additionally corrected 2.564% so hex bore and opposing servo bore share an axis; slot fit retains approximately 0.15mm clearance."
+    },
+    {
+      "name": "thigh_motor",
+      "source": "meshes/Thigh Design.stl",
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "translation_mm": [
+        5.422894,
+        333.241791,
+        -432.466418
+      ],
+      "link": "base_link",
+      "color": [
+        0.19,
+        0.22,
+        0.26,
+        1
+      ],
+      "fit_note": "Servo cluster includes screws/spline details. Axial output mounting shoulder z459.2664; spline tip is +4mm. Output-axis location is measured; shoulder-plane contact placement inferred.",
+      "source_region": [
+        [
+          -10000,
+          -10000,
+          -10000
+        ],
+        [
+          50,
+          10000,
+          10000
+        ]
+      ]
+    },
+    {
+      "name": "thigh_bottom",
+      "source": "meshes/Thigh Design.stl",
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "translation_mm": [
+        -343.778587,
+        -272.5,
+        -309.39998123
+      ],
+      "link": "base_link",
+      "color": [
+        0.05,
+        0.43,
+        0.46,
+        1
+      ],
+      "fit_note": "Thigh Design reference: upright cradle supports servo back on source floor Z294. Long fasteners link lower posts to output-side top frame.",
+      "source_region": [
+        [
+          -10000,
+          0,
+          -10000
+        ],
+        [
+          10000,
+          10000,
+          10000
+        ]
+      ]
+    },
+    {
+      "name": "thigh_top",
+      "source": "meshes/Thigh Design.stl",
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "scale": [
+        1,
+        0.999000999000999,
+        1
+      ],
+      "translation_mm": [
+        -149.519091,
+        912.4225774225774,
+        44.98365
+      ],
+      "link": "base_link",
+      "color": [
+        0.12,
+        0.78,
+        0.83,
+        1
+      ],
+      "fit_note": "Thigh Design reference: output-side top frame underside at Z14.6, above flange. Hole pitch corrected28.028\u219228mm to align with cradle; long fasteners span24mm above lower posts.",
+      "source_region": [
+        [
+          -10000,
+          -10000,
+          -10000
+        ],
+        [
+          10000,
+          -800,
+          10000
+        ]
+      ]
+    },
+    {
+      "name": "leg_bottom",
+      "source": "meshes/Leg/leg_bottom.stl",
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          -1,
+          0
+        ]
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "translation_mm": [
+        -754.49007026,
+        6.6360012,
+        1216.97437
+      ],
+      "link": "femur_link",
+      "color": [
+        0.05,
+        0.43,
+        0.46,
+        1
+      ],
+      "fit_note": "Leg design3 reference: cradle at motor BACK. Inner floor source Z-22.0360012 maps to axial-15.4mm, supporting motor backs. Passive-pivot slots align with output axes in X/Z."
+    },
+    {
+      "name": "leg_top",
+      "source": "meshes/Leg/leg_top.stl",
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          -1,
+          0
+        ]
+      ],
+      "scale": [
+        0.9901073550056405,
+        1.0004001600640258,
+        1
+      ],
+      "translation_mm": [
+        -741.5510730200799,
+        -6.900044,
+        184.81758703481395
+      ],
+      "link": "femur_link",
+      "color": [
+        0.12,
+        0.78,
+        0.83,
+        1
+      ],
+      "fit_note": "Leg design3 reference: top frame at OUTPUT end, source underside Z21.500044 maps to flange top axial14.6mm. Four hole axes align to lower cradle; long fasteners span22mm between posts and lid."
+    },
+    {
+      "name": "Motor",
+      "source": "meshes/Leg/Motor.stl",
+      "rotation": [
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "translation_mm": [
+        -5.422895,
+        -170.9,
+        66.669016
+      ],
+      "link": "femur_link",
+      "color": [
+        0.19,
+        0.22,
+        0.26,
+        1
+      ],
+      "fit_note": "Proximal servo output shaft points+Y and is held by coxa bracket; servo casing moves with femur. The imported spline detail remains a fixed visual part of casing."
+    },
+    {
+      "name": "Motor2",
+      "source": "meshes/Leg/Motor2.stl",
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "translation_mm": [
+        81.9991422099999,
+        -170.9,
+        -66.669016
+      ],
+      "link": "femur_link",
+      "color": [
+        0.19,
+        0.22,
+        0.26,
+        1
+      ],
+      "fit_note": "Distal servo casing belongs to femur; output drives tibia. Both motors retain original size. Approximately1mm mismatch remains between case centering and shell mounting openings."
+    },
+    {
+      "name": "foot_bottom",
+      "source": "meshes/foot_bottom.stl",
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          -1,
+          0
+        ]
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "translation_mm": [
+        -123.776415,
+        41.31047668457032,
+        0.0
+      ],
+      "link": "tibia_link",
+      "color": [
+        0.92,
+        0.48,
+        0.12,
+        1
+      ],
+      "fit_note": "Measured foot assembly; see analysis/foot/assembly_transforms.json for mating evidence."
+    },
+    {
+      "name": "foot_top",
+      "source": "meshes/foot_top.stl",
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "translation_mm": [
+        282.93768106933595,
+        19.400000000000002,
+        -57.75117492675781
+      ],
+      "link": "tibia_link",
+      "color": [
+        0.92,
+        0.48,
+        0.12,
+        1
+      ],
+      "fit_note": "Measured foot assembly; see analysis/foot/assembly_transforms.json for mating evidence."
+    },
+    {
+      "name": "foot_ground",
+      "source": "meshes/foot_ground.stl",
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "scale": [
+        0.9905170278421138,
+        1,
+        1
+      ],
+      "translation_mm": [
+        -11.00240799866502,
+        160.85404052734376,
+        42.81790542602539
+      ],
+      "link": "tibia_link",
+      "color": [
+        0.92,
+        0.48,
+        0.12,
+        1
+      ],
+      "fit_note": "Measured foot assembly; see analysis/foot/assembly_transforms.json for mating evidence."
+    },
+    {
+      "name": "foot_tip",
+      "source": "meshes/foot_tip.stl",
+      "rotation": [
+        [
+          0,
+          0,
+          -1
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          -1,
+          0,
+          0
+        ]
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "translation_mm": [
+        191.43272298893004,
+        57.07472839355469,
+        78.70100784301758
+      ],
+      "link": "tibia_link",
+      "color": [
+        0.19,
+        0.22,
+        0.26,
+        1
+      ],
+      "fit_note": "Measured foot assembly; see analysis/foot/assembly_transforms.json for mating evidence."
+    }
+  ],
+  "generated_supports": [
+    {
+      "name": "thigh_through_bolt_1",
+      "link": "base_link",
+      "color": [
+        0.48,
+        0.51,
+        0.55,
+        1
+      ],
+      "note": "Simplified long through-fastener shown in assembled reference. Hole axis is measured;3mm smooth shank and hex end sizes are illustrative. Threads are not modelled.",
+      "shapes": [
+        {
+          "type": "cylinder",
+          "axis": [
+            0,
+            0,
+            1
+          ],
+          "radius_mm": 1.5,
+          "height_mm": 45.0,
+          "center_mm": [
+            -9.8266,
+            -14.0,
+            1.1000000000000014
+          ]
+        },
+        {
+          "type": "cylinder",
+          "axis": [
+            0,
+            0,
+            1
+          ],
+          "radius_mm": 3.2,
+          "sections": 6,
+          "height_mm": 3,
+          "center_mm": [
+            -9.8266,
+            -14.0,
+            22.1
+          ]
+        },
+        {
+          "type": "cylinder",
+          "axis": [
+            0,
+            0,
+            1
+          ],
+          "radius_mm": 3.2,
+          "sections": 6,
+          "height_mm": 2.4,
+          "center_mm": [
+            -9.8266,
+            -14.0,
+            -20.2
+          ]
+        }
+      ]
+    },
+    {
+      "name": "thigh_through_bolt_2",
+      "link": "base_link",
+      "color": [
+        0.48,
+        0.51,
+        0.55,
+        1
+      ],
+      "note": "Simplified long through-fastener shown in assembled reference. Hole axis is measured;3mm smooth shank and hex end sizes are illustrative. Threads are not modelled.",
+      "shapes": [
+        {
+          "type": "cylinder",
+          "axis": [
+            0,
+            0,
+            1
+          ],
+          "radius_mm": 1.5,
+          "height_mm": 45.0,
+          "center_mm": [
+            -9.8266,
+            14.0,
+            1.1000000000000014
+          ]
+        },
+        {
+          "type": "cylinder",
+          "axis": [
+            0,
+            0,
+            1
+          ],
+          "radius_mm": 3.2,
+          "sections": 6,
+          "height_mm": 3,
+          "center_mm": [
+            -9.8266,
+            14.0,
+            22.1
+          ]
+        },
+        {
+          "type": "cylinder",
+          "axis": [
+            0,
+            0,
+            1
+          ],
+          "radius_mm": 3.2,
+          "sections": 6,
+          "height_mm": 2.4,
+          "center_mm": [
+            -9.8266,
+            14.0,
+            -20.2
+          ]
+        }
+      ]
+    },
+    {
+      "name": "leg_through_bolt_1",
+      "link": "femur_link",
+      "color": [
+        0.48,
+        0.51,
+        0.55,
+        1
+      ],
+      "note": "Simplified long through-fastener shown in assembled reference. Hole axis is measured;3mm smooth shank and hex end sizes are illustrative. Threads are not modelled.",
+      "shapes": [
+        {
+          "type": "cylinder",
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "radius_mm": 1.5,
+          "height_mm": 43.0,
+          "center_mm": [
+            9.695759739999971,
+            2.1000000000000014,
+            -14.0
+          ]
+        },
+        {
+          "type": "cylinder",
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "radius_mm": 3.2,
+          "sections": 6,
+          "height_mm": 3,
+          "center_mm": [
+            9.695759739999971,
+            22.1,
+            -14.0
+          ]
+        },
+        {
+          "type": "cylinder",
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "radius_mm": 3.2,
+          "sections": 6,
+          "height_mm": 2.4,
+          "center_mm": [
+            9.695759739999971,
+            -18.2,
+            -14.0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "leg_through_bolt_2",
+      "link": "femur_link",
+      "color": [
+        0.48,
+        0.51,
+        0.55,
+        1
+      ],
+      "note": "Simplified long through-fastener shown in assembled reference. Hole axis is measured;3mm smooth shank and hex end sizes are illustrative. Threads are not modelled.",
+      "shapes": [
+        {
+          "type": "cylinder",
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "radius_mm": 1.5,
+          "height_mm": 43.0,
+          "center_mm": [
+            9.695759739999971,
+            2.1000000000000014,
+            14.0
+          ]
+        },
+        {
+          "type": "cylinder",
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "radius_mm": 3.2,
+          "sections": 6,
+          "height_mm": 3,
+          "center_mm": [
+            9.695759739999971,
+            22.1,
+            14.0
+          ]
+        },
+        {
+          "type": "cylinder",
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "radius_mm": 3.2,
+          "sections": 6,
+          "height_mm": 2.4,
+          "center_mm": [
+            9.695759739999971,
+            -18.2,
+            14.0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "leg_through_bolt_3",
+      "link": "femur_link",
+      "color": [
+        0.48,
+        0.51,
+        0.55,
+        1
+      ],
+      "note": "Simplified long through-fastener shown in assembled reference. Hole axis is measured;3mm smooth shank and hex end sizes are illustrative. Threads are not modelled.",
+      "shapes": [
+        {
+          "type": "cylinder",
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "radius_mm": 1.5,
+          "height_mm": 43.0,
+          "center_mm": [
+            66.88043973999993,
+            2.1000000000000014,
+            -14.0
+          ]
+        },
+        {
+          "type": "cylinder",
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "radius_mm": 3.2,
+          "sections": 6,
+          "height_mm": 3,
+          "center_mm": [
+            66.88043973999993,
+            22.1,
+            -14.0
+          ]
+        },
+        {
+          "type": "cylinder",
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "radius_mm": 3.2,
+          "sections": 6,
+          "height_mm": 2.4,
+          "center_mm": [
+            66.88043973999993,
+            -18.2,
+            -14.0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "leg_through_bolt_4",
+      "link": "femur_link",
+      "color": [
+        0.48,
+        0.51,
+        0.55,
+        1
+      ],
+      "note": "Simplified long through-fastener shown in assembled reference. Hole axis is measured;3mm smooth shank and hex end sizes are illustrative. Threads are not modelled.",
+      "shapes": [
+        {
+          "type": "cylinder",
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "radius_mm": 1.5,
+          "height_mm": 43.0,
+          "center_mm": [
+            66.88043973999993,
+            2.1000000000000014,
+            14.0
+          ]
+        },
+        {
+          "type": "cylinder",
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "radius_mm": 3.2,
+          "sections": 6,
+          "height_mm": 3,
+          "center_mm": [
+            66.88043973999993,
+            22.1,
+            14.0
+          ]
+        },
+        {
+          "type": "cylinder",
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "radius_mm": 3.2,
+          "sections": 6,
+          "height_mm": 2.4,
+          "center_mm": [
+            66.88043973999993,
+            -18.2,
+            14.0
+          ]
+        }
+      ]
+    }
+  ]
+}

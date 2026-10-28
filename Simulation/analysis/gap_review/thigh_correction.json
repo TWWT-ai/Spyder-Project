@@ -1,0 +1,180 @@
+{
+  "corrections": {
+    "thigh_bottom": {
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "translation_mm": [
+        -343.778587,
+        272.5,
+        314.6
+      ]
+    },
+    "thigh_top": {
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "translation_mm": [
+        -149.519091,
+        -913.334956,
+        -18.78365
+      ]
+    }
+  },
+  "planes_mm": {
+    "shaft_shoulder": 26.8,
+    "lower_front_face": 26.6,
+    "lower_post_face": 14.6,
+    "servo_flange": [
+      11.6,
+      14.6
+    ],
+    "upper_cover_inner_face": 11.6,
+    "servo_back_face": -15.4,
+    "blue_rear_inner_face": -26.8
+  },
+  "generated_support_proposal": {
+    "backplate": {
+      "center_mm": [
+        -10.75,
+        0,
+        -16.9
+      ],
+      "size_mm": [
+        40.6,
+        20,
+        3
+      ],
+      "hole_centres_xy_mm": [
+        [
+          -28.75,
+          -7.7509
+        ],
+        [
+          -28.75,
+          7.7509
+        ],
+        [
+          7.25,
+          -7.7509
+        ],
+        [
+          7.25,
+          7.7509
+        ]
+      ],
+      "hole_diameter_mm": 2.2
+    },
+    "hub": {
+      "center_mm": [
+        0,
+        0,
+        -22.6
+      ],
+      "height_mm": 8.4,
+      "outer_radius_mm": 8,
+      "inner_radius_mm": 3.2
+    },
+    "clamp_spacers": {
+      "centres_mm": [
+        [
+          -9.8266,
+          -14,
+          13.1
+        ],
+        [
+          -9.8266,
+          14,
+          13.1
+        ]
+      ],
+      "height_mm": 3,
+      "outer_radius_mm": 3.5,
+      "inner_radius_mm": 2
+    }
+  },
+  "measured_features": {
+    "lower_keyhole_source_centre_mm": [
+      343.77997832,
+      272.49999978,
+      288
+    ],
+    "lower_keyhole_semiaxes_mm": [
+      3.91300736,
+      3.76249506
+    ],
+    "lower_screw_post_centres_source_mm": [
+      [
+        333.95196533,
+        258.5,
+        300
+      ],
+      [
+        333.95196533,
+        286.5,
+        300
+      ]
+    ],
+    "upper_matching_hole_centres_source_mm": [
+      [
+        139.692504,
+        -927.349,
+        -30.38365
+      ],
+      [
+        139.692504,
+        -899.321,
+        -30.38365
+      ]
+    ],
+    "yaw_plate_hex_circumradius_mm": 6.62392,
+    "yaw_plate_hex_across_flats_mm": 11.544,
+    "motor_rear_screw_centres_assembled_xy_mm": [
+      [
+        -28.75,
+        -7.7509
+      ],
+      [
+        -28.75,
+        7.7509
+      ],
+      [
+        7.25,
+        -7.7509
+      ],
+      [
+        7.25,
+        7.7509
+      ]
+    ]
+  },
+  "caveat": "Support plate/hub are new inferred hardware, not supplied CAD; attachment pattern and bearing specification remain unknown."
+}

@@ -1,0 +1,180 @@
+{
+  "units": "mm",
+  "formula": "assembled_vertex = R @ (scale * source_vertex) + translation",
+  "frame": "origin approximately bottom shaft centre, X outward, Y shaft axis, Z transverse to plate; shaft hole mismatch 0.13mm",
+  "parts": {
+    "foot_bottom": {
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "translation": [
+        -123.776415,
+        -37.955238342285156,
+        0
+      ]
+    },
+    "foot_top": {
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          -1,
+          0
+        ]
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "translation": [
+        282.93768106933595,
+        -16.044761657714844,
+        57.75117492675781
+      ]
+    },
+    "foot_ground": {
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scale": [
+        0.9905170278421138,
+        1,
+        1
+      ],
+      "translation": [
+        -11.00240799866502,
+        -157.4988021850586,
+        -42.81790542602539
+      ]
+    },
+    "foot_tip": {
+      "rotation": [
+        [
+          0,
+          0,
+          -1
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ]
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "translation": [
+        191.43272298893004,
+        -53.71949005126953,
+        -78.70100784301758
+      ]
+    }
+  },
+  "contact_point": [
+    166.9327268036273,
+    0,
+    0
+  ],
+  "inside_plate_gap": 45.91047668457031,
+  "ground_scale_note": "X fitted to5.4mm distal sideplate bar; native ground dimension5.451698mm,1% correction. Y/Z preserved. Slots remain loose due independently resized parts.",
+  "shaft_centres_source_mm": {
+    "foot_bottom": [
+      123.776415,
+      0,
+      -12
+    ],
+    "foot_top": [
+      -282.80487060546875,
+      57.75117492675781,
+      42
+    ]
+  },
+  "shaft_axes_source": {
+    "foot_bottom": [
+      0,
+      0,
+      1
+    ],
+    "foot_top": [
+      0,
+      0,
+      1
+    ]
+  },
+  "shaft_centres_assembled_mm": {
+    "foot_bottom": [
+      0.0,
+      -25.955238342285156,
+      0.0
+    ],
+    "foot_top": [
+      0.13281046386720163,
+      25.955238342285156,
+      0.0
+    ]
+  },
+  "mating_evidence": [
+    "Top and bottom distal forks overlay with top XY translation(+406.714096,-57.751175)mm; proximal shaft centres then differ0.132810mm in X. Cannot align both shafts and both distal forks exactly by rigid translation.",
+    "Ground distal crossbar spans source X109.372391..114.824089mm. Sideplate bar spans source X221.109222..226.509222mm. Fitted ground Xscale0.990517 aligns these widths and proximal bar near165.309..172.509mm simultaneously.",
+    "Ground notch floors source Y134.543564 and180.454041mm define sideplate INNER faces,45.910477mm apart. Both sideplates6mm thick; midplane separation51.910477mm.",
+    "Ground plane thickness6.643990mm fits side plate central openings of8mm with0.678005mm clearance on either side.",
+    "Tip fingers point back toward knee. Tip inner finger gap in source X is about6.798mm, compatible with ground plane6.644mm. Ground distal fork5.4mm deep fits6mm long fingers with0.6mm offset/clearance.",
+    "Foot contact point is outer centre of foot_tip planar pad, not its centre of mass."
+  ],
+  "assumptions": [
+    "Dimensions interpreted as millimetres as exported by user.",
+    "Ground X scale adjustment is a virtual fitting correction; source STLs are unchanged.",
+    "This is a mechanically plausible inferred assembly, not a manufacturing clearance certification.",
+    "No separate passive ankle joint: all four pieces are one rigid tibia link."
+  ]
+}

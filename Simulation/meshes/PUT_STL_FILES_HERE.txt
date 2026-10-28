@@ -1,0 +1,10 @@
+Your original STL files are now included in the assembled leg.
+
+Keep these source files unchanged. Fitted copies are in assembled/ and are
+generated from assembly.json by build_assembly.py. Generated meshes use METRES;
+original exports use MILLIMETRES with documented physical scale corrections.
+
+Run: .\.venv\Scripts\python.exe simulate.py
+
+You no longer need to create coxa.stl, femur.stl or tibia.stl.
+See README.md for controls, verification and remaining fit gaps.

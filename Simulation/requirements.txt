@@ -1,0 +1,4 @@
+pybullet>=3.2.7
+numpy>=1.26
+scipy>=1.11
+pillow>=10

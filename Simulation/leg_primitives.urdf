@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!-- Runnable demo: illustrative geometry and lengths, NOT your actual CAD. Units: metres, kg, radians. -->
+<robot name="three_dof_leg_demo">
+  <material name="base_gray"><color rgba="0.35 0.40 0.46 1"/></material>
+  <material name="coxa_blue"><color rgba="0.16 0.46 0.85 1"/></material>
+  <material name="femur_teal"><color rgba="0.05 0.69 0.61 1"/></material>
+  <material name="tibia_orange"><color rgba="0.95 0.54 0.13 1"/></material>
+
+  <!-- An attachment bracket: held fixed while testing ONE leg. -->
+  <link name="base_link">
+    <inertial><origin xyz="0 0 0"/><mass value="0.20"/><inertia ixx="0.00015" ixy="0" ixz="0" iyy="0.00015" iyz="0" izz="0.00015"/></inertial>
+    <visual><geometry><box size="0.065 0.070 0.040"/></geometry><material name="base_gray"/></visual>
+    <collision><geometry><box size="0.065 0.070 0.040"/></geometry></collision>
+  </link>
+
+  <!-- Coxa rotates about the vertical Z axis. Link +X points toward the femur joint. -->
+  <link name="coxa_link">
+    <inertial><origin xyz="0.025 0 0"/><mass value="0.06"/><inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.00002" iyz="0" izz="0.00002"/></inertial>
+    <visual><origin xyz="0.025 0 0"/><geometry><box size="0.050 0.025 0.025"/></geometry><material name="coxa_blue"/></visual>
+    <collision><origin xyz="0.025 0 0"/><geometry><box size="0.050 0.025 0.025"/></geometry></collision>
+  </link>
+
+  <!-- Femur starts at the femur servo shaft and extends along its local +X axis. -->
+  <link name="femur_link">
+    <inertial><origin xyz="0.050 0 0"/><mass value="0.08"/><inertia ixx="0.00002" ixy="0" ixz="0" iyy="0.00008" iyz="0" izz="0.00008"/></inertial>
+    <visual><origin xyz="0.050 0 0"/><geometry><box size="0.100 0.026 0.025"/></geometry><material name="femur_teal"/></visual>
+    <collision><origin xyz="0.050 0 0"/><geometry><box size="0.100 0.026 0.025"/></geometry></collision>
+  </link>
+
+  <!-- Tibia starts at knee shaft and its +X endpoint is the foot tip. -->
+  <link name="tibia_link">
+    <inertial><origin xyz="0.070 0 0"/><mass value="0.06"/><inertia ixx="0.00002" ixy="0" ixz="0" iyy="0.00013" iyz="0" izz="0.00013"/></inertial>
+    <visual><origin xyz="0.070 0 0"/><geometry><box size="0.140 0.022 0.022"/></geometry><material name="tibia_orange"/></visual>
+    <collision><origin xyz="0.070 0 0"/><geometry><box size="0.140 0.022 0.022"/></geometry></collision>
+  </link>
+
+  <joint name="coxa_yaw" type="revolute">
+    <parent link="base_link"/><child link="coxa_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/><axis xyz="0 0 1"/>
+    <limit lower="-1.05" upper="1.05" effort="1.0" velocity="2.0"/>
+  </joint>
+  <joint name="femur_pitch" type="revolute">
+    <parent link="coxa_link"/><child link="femur_link"/>
+    <origin xyz="0.050 0 0" rpy="0 0 0"/><axis xyz="0 1 0"/>
+    <limit lower="-0.90" upper="1.25" effort="1.0" velocity="2.0"/>
+  </joint>
+  <joint name="tibia_pitch" type="revolute">
+    <parent link="femur_link"/><child link="tibia_link"/>
+    <origin xyz="0.100 0 0" rpy="0 0 0"/><axis xyz="0 1 0"/>
+    <limit lower="-1.5" upper="1.5" effort="1.0" velocity="2.0"/>
+  </joint>
+  <link name="foot_tip">
+    <inertial><mass value="0"/><inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/></inertial>
+  </link>
+  <joint name="foot_tip_fixed" type="fixed">
+    <parent link="tibia_link"/><child link="foot_tip"/>
+    <origin xyz="0.140 0 0"/>
+  </joint>
+</robot>

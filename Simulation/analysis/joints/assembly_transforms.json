@@ -1,0 +1,508 @@
+{
+  "units": "mm",
+  "convention": "assembled = linear @ source_vertex + translation_mm; rotation is proper orthonormal; scale is separate from unit conversion",
+  "frame": "yaw axis midpoint at (0,0,0); pitch axis is Y through (43.4112052,0,0); ring normal X",
+  "yaw_axis": [
+    0,
+    0,
+    1
+  ],
+  "pitch_axis": [
+    0,
+    1,
+    0
+  ],
+  "pitch_axis_point_mm": [
+    43.4112052,
+    0,
+    0
+  ],
+  "parts": [
+    {
+      "name": "joint_cross",
+      "source": "meshes/Joints/joint_cross.stl",
+      "source_split_stl": "analysis\\joints\\joint_cross_source.stl",
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "scale": [
+        0.1,
+        0.1,
+        0.1
+      ],
+      "anchor_source_mm": [
+        1582.296,
+        -240.007,
+        225.699
+      ],
+      "anchor_assembled_mm": [
+        21.7056026,
+        0,
+        0
+      ],
+      "linear": [
+        [
+          0.1,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.1,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.1
+        ]
+      ],
+      "translation_mm": [
+        -136.5239974,
+        24.000700000000002,
+        -22.569900000000004
+      ],
+      "notes": "Scale 0.1 inferred from matching 5.933mm ring slab, plate fork slots, 4.8mm recess depth; not a unit conversion."
+    },
+    {
+      "name": "yaw_bottom",
+      "source": "meshes/Joints/joint_bottom.stl",
+      "source_split_stl": "analysis\\joints\\yaw_bottom_source.stl",
+      "rotation": [
+        [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "scale": [
+        0.1,
+        0.1,
+        0.1
+      ],
+      "anchor_source_mm": [
+        1583.946533,
+        -1170.746885,
+        -30.0
+      ],
+      "anchor_assembled_mm": [
+        21.7056026,
+        0,
+        26.8
+      ],
+      "linear": [
+        [
+          -0.1,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.1,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.1
+        ]
+      ],
+      "translation_mm": [
+        180.1002559,
+        -117.07468850000001,
+        29.8
+      ],
+      "notes": "Four plates all rigid with ring. Top X scale additionally corrected 2.564% so hex bore and opposing servo bore share an axis; slot fit retains approximately 0.15mm clearance."
+    },
+    {
+      "name": "yaw_top",
+      "source": "meshes/Joints/joint_top.stl",
+      "source_split_stl": "analysis\\joints\\yaw_top_source.stl",
+      "rotation": [
+        [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      ],
+      "scale": [
+        0.09743590823245794,
+        0.1,
+        0.1
+      ],
+      "anchor_source_mm": [
+        983.586414,
+        -1189.856956,
+        -130.0
+      ],
+      "anchor_assembled_mm": [
+        21.7056026,
+        0,
+        -26.8
+      ],
+      "linear": [
+        [
+          -0.09743590823245794,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.1,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          -0.1
+        ]
+      ],
+      "translation_mm": [
+        117.54223817319638,
+        118.98569560000001,
+        -39.8
+      ],
+      "notes": "Four plates all rigid with ring. Top X scale additionally corrected 2.564% so hex bore and opposing servo bore share an axis; slot fit retains approximately 0.15mm clearance."
+    },
+    {
+      "name": "pitch_bottom",
+      "source": "meshes/Joints/joint_bottom2.stl",
+      "source_split_stl": "analysis\\joints\\pitch_bottom_source.stl",
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          -1.0,
+          0.0
+        ]
+      ],
+      "scale": [
+        0.1,
+        0.1,
+        0.1
+      ],
+      "anchor_source_mm": [
+        1583.946533,
+        -1170.746885,
+        -30.0
+      ],
+      "anchor_assembled_mm": [
+        21.7056026,
+        26.8,
+        0
+      ],
+      "linear": [
+        [
+          0.1,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.1
+        ],
+        [
+          0.0,
+          -0.1,
+          0.0
+        ]
+      ],
+      "translation_mm": [
+        -136.68905070000002,
+        29.8,
+        -117.07468850000001
+      ],
+      "notes": "Four plates all rigid with ring. Top X scale additionally corrected 2.564% so hex bore and opposing servo bore share an axis; slot fit retains approximately 0.15mm clearance."
+    },
+    {
+      "name": "pitch_top",
+      "source": "meshes/Joints/joint_top2.stl",
+      "source_split_stl": "analysis\\joints\\pitch_top_source.stl",
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "scale": [
+        0.09743590823245794,
+        0.1,
+        0.1
+      ],
+      "anchor_source_mm": [
+        983.586414,
+        -1189.856956,
+        -130.0
+      ],
+      "anchor_assembled_mm": [
+        21.7056026,
+        -26.8,
+        0
+      ],
+      "linear": [
+        [
+          0.09743590823245794,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          -0.1
+        ],
+        [
+          0.0,
+          0.1,
+          0.0
+        ]
+      ],
+      "translation_mm": [
+        -74.1310329731964,
+        -39.8,
+        118.98569560000001
+      ],
+      "notes": "Four plates all rigid with ring. Top X scale additionally corrected 2.564% so hex bore and opposing servo bore share an axis; slot fit retains approximately 0.15mm clearance."
+    },
+    {
+      "name": "thigh_motor",
+      "source": "meshes/Thigh Design.stl",
+      "source_split_stl": "analysis\\joints\\thigh_motor_source.stl",
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "anchor_source_mm": [
+        -5.422894,
+        -333.241791,
+        459.266418
+      ],
+      "anchor_assembled_mm": [
+        0,
+        0,
+        26.8
+      ],
+      "linear": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "translation_mm": [
+        5.422894,
+        333.241791,
+        -432.466418
+      ],
+      "notes": "Servo cluster includes screws/spline details. Axial output mounting shoulder z459.2664; spline tip is +4mm. Output-axis location is measured; shoulder-plane contact placement inferred."
+    },
+    {
+      "name": "thigh_bottom",
+      "source": "meshes/Thigh Design.stl",
+      "source_split_stl": "analysis\\joints\\thigh_bottom_source.stl",
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "anchor_source_mm": [
+        343.778587,
+        272.5,
+        294
+      ],
+      "anchor_assembled_mm": [
+        0,
+        0,
+        -15.4
+      ],
+      "linear": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "translation_mm": [
+        -343.778587,
+        -272.5,
+        -309.4
+      ],
+      "notes": "Motor base sits on 294mm bracket floor. Its access bore approximately matches the servo axis; raw bracket anisotropic dimensions differ from servo by about 0.9mm along X."
+    },
+    {
+      "name": "thigh_top",
+      "source": "meshes/Thigh Design.stl",
+      "source_split_stl": "analysis\\joints\\thigh_top_source.stl",
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "anchor_source_mm": [
+        139.692504,
+        -913.334956,
+        -30.38365
+      ],
+      "anchor_assembled_mm": [
+        -9.826587,
+        0,
+        14.6
+      ],
+      "linear": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "translation_mm": [
+        -149.519091,
+        913.334956,
+        44.98365
+      ],
+      "notes": "Frame sits on servo mounting-flange upper surface. Aligns matching bracket screw holes within 0.03mm. Leaves 4mm gap above bottom-bracket uprights: actual spacer/fastener arrangement is absent and cannot be uniquely inferred."
+    }
+  ],
+  "limitations": [
+    "No hardware, bearing or servo horn STL supplied. Small mounting gaps need real hardware validation.",
+    "Uniform 0.1 correction for joint meshes and 0.974359 additional top-X correction are inferred CAD repairs, not verified real dimensions.",
+    "Thigh upper cover requires 4mm stand-off from lower uprights to avoid intersecting motor flanges; the source parts do not form an exact rigid snap-fit.",
+    "Lower yaw bearing inner face is 5.4mm below thigh bottom bracket; missing bearing/spacer arrangement remains unverified."
+  ]
+}

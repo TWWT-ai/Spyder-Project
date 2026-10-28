@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!-- YOUR CAD TEMPLATE: add STL files and change joint origins, mesh offsets, masses, inertias and limits. -->
+<!-- Frames: each moving link origin is at the corresponding servo shaft; +X points toward the next joint. -->
+<!-- STL scale 0.001 assumes Fusion export in MILLIMETRES; if exported in metres use 1 1 1. -->
+<robot name="three_dof_leg_from_fusion">
+  <link name="base_link">
+    <inertial><mass value="0.20"/><inertia ixx="0.00015" ixy="0" ixz="0" iyy="0.00015" iyz="0" izz="0.00015"/></inertial>
+    <!-- Placeholder base bracket. Replace with actual chassis CAD later if desired. -->
+    <visual><geometry><box size="0.065 0.070 0.040"/></geometry></visual>
+    <collision><geometry><box size="0.065 0.070 0.040"/></geometry></collision>
+  </link>
+
+  <link name="coxa_link">
+    <inertial><origin xyz="0.025 0 0"/><mass value="0.06"/><inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.00002" iyz="0" izz="0.00002"/></inertial>
+    <visual>
+      <!-- This offset aligns the mesh's own origin to the coxa servo-shaft frame. Tune for YOUR export. -->
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="meshes/coxa.stl" scale="0.001 0.001 0.001"/></geometry>
+    </visual>
+    <!-- Approximate collision shape; don't use fine detailed STL screws for collision. -->
+    <collision><origin xyz="0.025 0 0"/><geometry><box size="0.050 0.025 0.025"/></geometry></collision>
+  </link>
+
+  <link name="femur_link">
+    <inertial><origin xyz="0.050 0 0"/><mass value="0.08"/><inertia ixx="0.00002" ixy="0" ixz="0" iyy="0.00008" iyz="0" izz="0.00008"/></inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="meshes/femur.stl" scale="0.001 0.001 0.001"/></geometry>
+    </visual>
+    <collision><origin xyz="0.050 0 0"/><geometry><box size="0.100 0.026 0.025"/></geometry></collision>
+  </link>
+
+  <link name="tibia_link">
+    <inertial><origin xyz="0.070 0 0"/><mass value="0.06"/><inertia ixx="0.00002" ixy="0" ixz="0" iyy="0.00013" iyz="0" izz="0.00013"/></inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="meshes/tibia.stl" scale="0.001 0.001 0.001"/></geometry>
+    </visual>
+    <collision><origin xyz="0.070 0 0"/><geometry><box size="0.140 0.022 0.022"/></geometry></collision>
+  </link>
+
+  <!-- Three joints. Change values to the measured servo SHAFT locations and axes. -->
+  <joint name="coxa_yaw" type="revolute">
+    <parent link="base_link"/><child link="coxa_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/><axis xyz="0 0 1"/>
+    <limit lower="-1.05" upper="1.05" effort="1.0" velocity="2.0"/>
+  </joint>
+  <joint name="femur_pitch" type="revolute">
+    <parent link="coxa_link"/><child link="femur_link"/>
+    <origin xyz="0.050 0 0" rpy="0 0 0"/><axis xyz="0 1 0"/>
+    <limit lower="-0.90" upper="1.25" effort="1.0" velocity="2.0"/>
+  </joint>
+  <joint name="tibia_pitch" type="revolute">
+    <parent link="femur_link"/><child link="tibia_link"/>
+    <origin xyz="0.100 0 0" rpy="0 0 0"/><axis xyz="0 1 0"/>
+    <limit lower="-1.5" upper="1.5" effort="1.0" velocity="2.0"/>
+  </joint>
+</robot>
