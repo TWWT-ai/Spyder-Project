@@ -8,7 +8,7 @@
     "Leg cover X/Y fitted to lower-shell screw holes; approximately1mm case/opening mismatch remains from source distortions.",
     "Foot ground X scaled0.990517; foot opposed shaft holes retain0.132810mm X mismatch when distal tabs align.",
     "Leg and thigh use a rear cradle and output-side top frame, connected by long fasteners as shown in the reference. Six smooth-shank fasteners are illustrative; exact screw specifications were not supplied.",
-    "Previous rear adapter and short spacers were removed because the reference does not show them. The blue coupling still has5.4mm rear-pivot clearance; its actual bearing/fastener arrangement is unresolved.",
+    "Previous rear adapter and short spacers were removed because the reference does not show them. The coupling ring lobes are pulled in (recess floors at 24.2mm facing the yaw plates, 23.2mm facing the pitch plates, recess widths unchanged) so both bottom plates sit 0.2mm from their cradles. Without cradle reliefs, bottom fork tabs and ring intersect the cradles by about 1.2mm; its actual bearing/fastener arrangement is unresolved.",
     "Entire foot moved axially to give0.2mm nominal clearance to leg cradle rear face; no internal foot-piece transforms changed.",
     "All masses, inertias, torque settings, joint limits and collision boxes are illustrative. Default mode is kinematic and does not validate collisions, load capacity or walking.",
     "Detailed servo spline geometry stays in the casing visual; separate horns/fasteners are absent. Joint axes, not spline teeth, define motion."
@@ -167,7 +167,7 @@
       "origin_mm": [
         0,
         0,
-        0
+        2.6
       ],
       "axis": [
         0,
@@ -185,7 +185,7 @@
       "child": "femur_link",
       "origin_mm": [
         43.4112052,
-        0,
+        -3.6,
         0
       ],
       "axis": [
@@ -254,6 +254,10 @@
         24.000700000000002,
         -22.569900000000004
       ],
+      "compress_lobes": [
+        {"axis": 1, "keep_mm": 13.0, "band_mm": 22.0, "shift_mm": 3.6},
+        {"axis": 2, "keep_mm": 13.0, "band_mm": 22.0, "shift_mm": 2.6}
+      ],
       "link": "coxa_link",
       "color": [
         0.18,
@@ -261,7 +265,7 @@
         0.72,
         1
       ],
-      "fit_note": "Scale 0.1 inferred from matching 5.933mm ring slab, plate fork slots, 4.8mm recess depth; not a unit conversion."
+      "fit_note": "Scale 0.1 inferred from matching 5.933mm ring slab, plate fork slots, 4.8mm recess depth; not a unit conversion. compress_lobes moves the recess floors inward by 3.6mm (Y) and 2.6mm (Z) while keeping recess widths and ring thickness."
     },
     {
       "name": "yaw_bottom",
@@ -291,7 +295,7 @@
       "translation_mm": [
         180.1002559,
         -117.07468850000001,
-        29.8
+        -25.9
       ],
       "link": "coxa_link",
       "color": [
@@ -330,7 +334,7 @@
       "translation_mm": [
         117.54223817319638,
         118.98569560000001,
-        -39.8
+        15.899999999999999
       ],
       "link": "coxa_link",
       "color": [
@@ -368,7 +372,7 @@
       ],
       "translation_mm": [
         -136.68905070000002,
-        29.8,
+        -24.9,
         -117.07468850000001
       ],
       "link": "coxa_link",
@@ -407,7 +411,7 @@
       ],
       "translation_mm": [
         -74.1310329731964,
-        -39.8,
+        14.899999999999999,
         118.98569560000001
       ],
       "link": "coxa_link",

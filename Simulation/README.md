@@ -1,6 +1,6 @@
 # Assembled 3-DOF robot leg
 
-Your **14 original STL files have been fitted into 16 imported parts and three movable joints**, following the supplied **Foot Design, Leg design 3 and Thigh Design** assembly references. Leg Designs 1 and 2 are excluded. The combined `Thigh Design.stl` was separated into its servo and two brackets. Six simplified long fasteners are modelled separately. The four foot pieces form one rigid moving link. Original STLs are unchanged.
+Your **14 original STL files have been fitted into 16 imported parts and three movable joints**, following the supplied **Foot Design, Leg design 3 and Thigh Design** assembly references. Leg Designs 1 and 2 are excluded. The combined `Thigh Design.stl` was separated into its servo and two brackets. Six simplified long fasteners are modelled separately. The four foot pieces form one rigid moving link. Original STLs are unchanged, except that the upper frame inside `Thigh Design.stl` was updated from the revised Fusion `thigh_top` (see Corrections).
 
 This is a **geometry-derived, provisional assembly for kinematics**. The exports have inconsistent scales and do not include CAD constraints, bearings, horns or fasteners. The fitting corrections and remaining gaps are documented below and in `assembly.json`; this is not a verified manufacturing assembly.
 
@@ -101,7 +101,7 @@ Each visual part has its own fixed attachment in the URDF so PyBullet's GUI pres
 | End-pad lateral offset from knee frame | 3.3552 mm |
 | Foot sideplate inside gap | 45.9105 mm |
 
-At zero angles the leg extends along +X, with Z upward. Positive yaw turns toward +Y; positive pitch bends toward −Z. The joint origins share a neutral Z plane. The endpoint's lateral offset is included in the kinematics.
+At zero angles the leg extends along +X, with Z upward. Positive yaw turns toward +Y; positive pitch bends toward −Z. The coxa frame sits 2.6 mm above the thigh's neutral Z plane and the leg link is offset −3.6 mm in Y, because the servos stay seated on the reshaped coupling ring. The endpoint's lateral offset is included in the kinematics.
 
 ## Corrections and fit limits
 
@@ -111,8 +111,11 @@ These are physical fitting corrections **before** millimetres are converted to m
 |---|---|
 | All five joint files | Scale 0.1: resulting 5.933 mm ring thickness fits roughly 6.2 mm fork slots; ring recesses match plate thickness. |
 | Both joint top plates | Additional X factor 0.974359 makes opposing shaft holes coaxial. |
+| Coupling ring | The `compress_lobes` setting in `assembly.json` moves the recess floors in to 24.2 mm facing the yaw plates and 23.2 mm facing the pitch plates, leaving recess widths and ring thickness unchanged. Both bottom plates then sit 0.2 mm from their cradles. A plain scale cannot do this because it narrows the recesses, and the thigh stack (48.2 mm) is 2 mm taller than the leg stack (46.2 mm). |
+| All four joint plates | Each `joint_top` (hex bore) sits on its servo's output side, on the output shoulder beside `thigh_top`/`leg_top`. Each `joint_bottom` (round pivot bore) sits on the back side beside `thigh_bottom`/`leg_bottom`. All fork tabs face their servo and straddle the ring's recess band. |
 | Leg upper cover | X factor about 0.990107, Y about 1.000400, aligned using four screw-hole centres. |
 | Thigh upper cover | Y factor 0.999001 aligns the 28.028 mm source hole pitch with the lower cradle's 28 mm pitch. |
+| Thigh upper cover relief | Two cuts were made in Fusion `thigh_top` (mesh cut, then stitched) so the yaw coupling can turn. The raised front bar is cut back to a 15.8 mm radius from the yaw axis, and the frame's front edge is trimmed to a 23.25 mm radius. Material elsewhere is unchanged within 0.005 mm. Only these triangles changed in `Thigh Design.stl`; servo and cradle triangles are byte-identical. |
 | Foot ground brace | X factor 0.990517 aligns both crossbars with the sideplate fittings. Other axes retain native size. |
 | Servos and remaining pieces | Original size retained; translated and rotated. |
 
@@ -125,7 +128,8 @@ Remaining uncertainties:
 - The original short-clamp interpretation is superseded by the assembled CAD references. Plates now sit on opposite ends of each servo body. The added rear adapter and short spacers have been removed.
 - Six simplified long fasteners use the measured mounting-hole axes. Their 3 mm shanks and hex ends are illustrative; threads and final hardware specifications are not modelled.
 - The complete foot is offset axially to leave **0.2 mm nominal clearance** behind the corrected leg cradle. Its four pieces retain their relative positions.
-- The lower blue coupling plate remains **5.4 mm** below the thigh cradle. The supplied thumbnails do not show the assembled coupling or specify its bearing/fastener hardware, so this interface is still unresolved. It has not been filled with an invented adapter.
+- The back-side coupling plates sit **0.2 mm** from both the thigh cradle and the leg cradle. **The cradles are not relieved yet:** across the joint ranges, the bottom fork tabs and ring intersect `thigh_bottom` by up to 1.6 mm and `leg_bottom` by up to 1.35 mm. Each cradle needs a pocket about 5 mm deep in its back face, from 16.3 mm radius outward around its joint axis, before this can be built. The supplied thumbnails do not show the assembled coupling or specify its bearing/fastener hardware, so this interface is still unresolved. It has not been filled with an invented adapter.
+- With the `thigh_top` relief, neither the ring nor `yaw_top` overlaps the thigh frame anywhere across the ±60° yaw range. Before the relief, they overlapped it by up to 2.5 mm and 0.8 mm respectively. The relief keeps 0.5 mm clearance to the swept tabs and ring, and at least 1.3 mm of wall around the two front screw holes. The leg-side plates clear `leg_top`, `leg_bottom` and the servo across the full hip range. The front bar's original purpose is unknown; check that its removal does not matter for the physical part.
 - Detailed servo spline geometry stays in each casing's visual mesh; separate rotating horns and fasteners are not modelled.
 - Joint limits, masses, inertia, effort and collision boxes are illustrative. Default simulation and IK do **not** certify collision-free travel. `--physics` exercises an approximate model and does not validate loading or walking.
 

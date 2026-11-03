@@ -63,6 +63,17 @@ def adapter_mesh(spec):
     return result
 
 
+def compress_lobes(values, spec):
+    """Pull the outer lobes inward without changing the span within keep_mm of zero."""
+    keep, band, shift = spec['keep_mm'], spec['band_mm'], spec['shift_mm']
+    size = np.abs(values)
+    result = size.copy()
+    between = (size > keep) & (size < band)
+    result[between] = size[between] - shift * (size[between] - keep) / (band - keep)
+    result[size >= band] = size[size >= band] - shift
+    return np.sign(values) * result
+
+
 def build():
     config = json.loads((HERE / 'assembly.json').read_text(encoding='utf-8'))
     output = HERE / 'meshes' / 'assembled'
@@ -113,7 +124,10 @@ def build():
             raise ValueError(f"Invalid rotation for {part['name']}")
         if not np.all(np.isfinite(scale)) or np.any(scale <= 0):
             raise ValueError(f"Invalid scale for {part['name']}")
-        mesh.vertices = ((mesh.vertices * scale) @ rotation.T + translation) / 1000
+        vertices = (mesh.vertices * scale) @ rotation.T + translation
+        for spec in part.get('compress_lobes', []):
+            vertices[:, spec['axis']] = compress_lobes(vertices[:, spec['axis']], spec)
+        mesh.vertices = vertices / 1000
         mesh.export(output / (part['name'] + '.stl'))
         visual_link(robot, part['link'], part['name'], part['color'],
                     f"meshes/assembled/{part['name']}.stl")

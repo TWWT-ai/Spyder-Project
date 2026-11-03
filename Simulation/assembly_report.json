@@ -9,13 +9,13 @@
       "bounds_m": [
         [
           0.01873745279531249,
-          -0.033251076123046876,
-          -0.03325353342285157
+          -0.029651076123046877,
+          -0.030653533422851566
         ],
         [
           0.02467268228750001,
-          0.033254850390625,
-          0.0332529515625
+          0.029654850390625,
+          0.0306529515625
         ]
       ]
     },
@@ -28,12 +28,12 @@
         [
           -0.012330200642968749,
           -0.011627996605468751,
-          0.0268
+          -0.0289
         ],
         [
           0.029457604532812497,
           0.01162799704687501,
-          0.036102399826049805
+          -0.019597600173950194
         ]
       ]
     },
@@ -46,12 +46,12 @@
         [
           -0.02092158551288523,
           -0.01169999775937498,
-          -0.03615999984741211
+          0.01954000015258789
         ],
         [
           0.029457602073176915,
           0.01170000224062501,
-          -0.026799999999999997
+          0.0289
         ]
       ]
     },
@@ -63,12 +63,12 @@
       "bounds_m": [
         [
           0.013953600667187488,
-          0.0268,
+          -0.027899999999999998,
           -0.011627996605468751
         ],
         [
           0.05574140584296873,
-          0.036102399826049805,
+          -0.018597600173950193,
           0.01162799704687501
         ]
       ]
@@ -81,12 +81,12 @@
       "bounds_m": [
         [
           0.013953603126823068,
-          -0.03615999984741211,
+          0.01854000015258789,
           -0.01169999775937498
         ],
         [
           0.06433279071288521,
-          -0.026799999999999997,
+          0.027899999999999998,
           0.01170000224062501
         ]
       ]
@@ -131,17 +131,17 @@
       "name": "thigh_top",
       "source": "meshes/Thigh Design.stl",
       "link": "base_link",
-      "triangles": 980,
+      "triangles": 1840,
       "bounds_m": [
         [
           -0.03815239178125,
-          -0.017500892662025536,
-          0.014599979193115231
+          -0.017501563378028207,
+          0.01459926584472656
         ],
         [
-          0.023925260196289058,
+          0.02264805377539062,
           0.017500970708978457,
-          0.02660001161804199
+          0.026600013525390622
         ]
       ]
     },
@@ -296,7 +296,7 @@
     "meshes/Joints/joint_top.stl": "bde64c3e2151b5d25660cbf38308dfa38c93416538e589fdcf75065a1bf17c79",
     "meshes/Joints/joint_bottom2.stl": "1d0a77a52a7e4213a6530994184eb0669707602f45da4b18fe7636235794c928",
     "meshes/Joints/joint_top2.stl": "bde64c3e2151b5d25660cbf38308dfa38c93416538e589fdcf75065a1bf17c79",
-    "meshes/Thigh Design.stl": "5541e7ab47cbb71f55e2dd51dc283d914489c673dcee2cc7a48d238665c08190",
+    "meshes/Thigh Design.stl": "59005f384e8868db14e9603b1e39e723d26f7d9f968b2afbd63f823fbad020f3",
     "meshes/Leg/leg_bottom.stl": "e961da8f1cc40e6cc17da7fa0b1508bf6ce1c2b6f639a93b2ebb84f57caec1a5",
     "meshes/Leg/leg_top.stl": "c4fee96ee6c5dcd59fe092e84604f7dfc22d9e746bb9a61b823eca84ee750a8c",
     "meshes/Leg/Motor.stl": "13635d85435f1367dff109746ae0b3e9f08294d5a860ee66fc00a304fc8775b2",
@@ -313,7 +313,7 @@
     "Leg cover X/Y fitted to lower-shell screw holes; approximately1mm case/opening mismatch remains from source distortions.",
     "Foot ground X scaled0.990517; foot opposed shaft holes retain0.132810mm X mismatch when distal tabs align.",
     "Leg and thigh use a rear cradle and output-side top frame, connected by long fasteners as shown in the reference. Six smooth-shank fasteners are illustrative; exact screw specifications were not supplied.",
-    "Previous rear adapter and short spacers were removed because the reference does not show them. The blue coupling still has5.4mm rear-pivot clearance; its actual bearing/fastener arrangement is unresolved.",
+    "Previous rear adapter and short spacers were removed because the reference does not show them. The coupling ring lobes are pulled in (recess floors at 24.2mm facing the yaw plates, 23.2mm facing the pitch plates, recess widths unchanged) so both bottom plates sit 0.2mm from their cradles. Without cradle reliefs, bottom fork tabs and ring intersect the cradles by about 1.2mm; its actual bearing/fastener arrangement is unresolved.",
     "Entire foot moved axially to give0.2mm nominal clearance to leg cradle rear face; no internal foot-piece transforms changed.",
     "All masses, inertias, torque settings, joint limits and collision boxes are illustrative. Default mode is kinematic and does not validate collisions, load capacity or walking.",
     "Detailed servo spline geometry stays in the casing visual; separate horns/fasteners are absent. Joint axes, not spline teeth, define motion."

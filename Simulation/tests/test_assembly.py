@@ -99,6 +99,33 @@ class AssemblyTests(unittest.TestCase):
                 self.assertAlmostEqual(cover[1]-seat[1],22,places=5)
                 self.assertGreater(cover[1]-floor[1],29.99)
 
+    def test_coupling_seats_on_outputs_with_equal_back_gaps(self):
+        joints={j['name']:j['origin_mm'] for j in self.config['joints']}
+        bounds={p['name']:np.array(p['bounds_m'])*1000 for p in self.report['parts']}
+        # Fork-tab faces of the plates, expressed in the coxa frame.
+        yaw_top=self.point('yaw_top',[0,0,-83])[2]
+        yaw_bottom=self.point('yaw_bottom',[0,0,17])[2]
+        pitch_top=self.point('pitch_top',[0,0,-83])[1]
+        pitch_bottom=self.point('pitch_bottom',[0,0,17])[1]
+        # Top plates rest on the 26.8mm output shoulders in each servo's own link frame.
+        self.assertAlmostEqual(yaw_top+joints['coxa_yaw'][2],26.8,places=4)
+        self.assertAlmostEqual(pitch_top-joints['femur_pitch'][1],26.8,places=4)
+        thigh_gap=(bounds['thigh_bottom'][0][2]-joints['coxa_yaw'][2])-yaw_bottom
+        leg_gap=(bounds['leg_bottom'][0][1]+joints['femur_pitch'][1])-pitch_bottom
+        self.assertAlmostEqual(thigh_gap,leg_gap,places=2)
+        self.assertAlmostEqual(thigh_gap,.2,places=2)
+
+    def test_ring_reshape_keeps_recess_span_and_seats_plates(self):
+        ring=self.parts['joint_cross']
+        self.assertEqual(ring['scale'],[.1,.1,.1])
+        shifts={spec['axis']:spec['shift_mm'] for spec in ring['compress_lobes']}
+        for spec in ring['compress_lobes']:
+            # The ring's 7.8mm recess half-width stays inside the unchanged span.
+            self.assertGreater(spec['keep_mm'],7.8)
+            self.assertLess(spec['band_mm'],26.8)
+        self.assertAlmostEqual(self.point('yaw_top',[0,0,-83])[2],26.8-shifts[2],places=4)
+        self.assertAlmostEqual(self.point('pitch_top',[0,0,-83])[1],26.8-shifts[1],places=4)
+
     def test_thigh_cradle_and_lid_match_reference_and_use_long_fasteners(self):
         back=self.point('thigh_motor',[-5.422894,-333.241791,417.06643677])
         floor=self.point('thigh_bottom',[343.778587,272.5,294])
