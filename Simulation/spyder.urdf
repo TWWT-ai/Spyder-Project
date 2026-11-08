@@ -1,0 +1,1849 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot name="spyder">
+  <link name="body">
+    <visual name="invisible_frame">
+      <geometry>
+        <sphere radius="0.000000001" />
+      </geometry>
+      <material name="body_invisible">
+        <color rgba="0 0 0 0" />
+      </material>
+    </visual>
+    <inertial>
+      <origin xyz="-2.405616285e-05 0.002593914562 0.03007602613" rpy="0 0 0" />
+      <mass value="0.12870116" />
+      <inertia ixx="0.00058165672" iyy="0.00021580375" izz="0.00067582362" ixy="-4.7856033e-07" ixz="-8.9436902e-08" iyz="9.2773086e-06" />
+    </inertial>
+    <collision name="body_hull">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/spyder/body_hull.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="body_shell_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="body_shell">
+      <geometry>
+        <mesh filename="meshes/spyder/body.stl" scale="1 1 1" />
+      </geometry>
+      <material name="body_shell_color">
+        <color rgba="0.55 0.58 0.62 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="body_shell_attachment" type="fixed">
+    <parent link="body" />
+    <child link="body_shell_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="fr_base">
+    <visual name="invisible_frame">
+      <geometry>
+        <sphere radius="0.000000001" />
+      </geometry>
+      <material name="fr_base_invisible">
+        <color rgba="0 0 0 0" />
+      </material>
+    </visual>
+    <inertial>
+      <origin xyz="-0.01054227138 2.915380855e-05 6.404762321e-06" rpy="0 0 0" />
+      <mass value="0.069347052" />
+      <inertia ixx="1.5334462e-05" iyy="2.3136659e-05" izz="1.5056402e-05" ixy="3.214137e-09" ixz="-1.596147e-07" iyz="2.8278375e-09" />
+    </inertial>
+    <collision name="fr_base_hull">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/spyder/base_hull.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="fr_coxa">
+    <visual name="invisible_frame">
+      <geometry>
+        <sphere radius="0.000000001" />
+      </geometry>
+      <material name="fr_coxa_invisible">
+        <color rgba="0 0 0 0" />
+      </material>
+    </visual>
+    <inertial>
+      <origin xyz="0.02198297344 0.000280634117 0.0002753372676" rpy="0 0 0" />
+      <mass value="0.015720499" />
+      <inertia ixx="1.1579465e-05" iyy="9.7143667e-06" izz="9.7143205e-06" ixy="-2.2874679e-07" ixz="2.2874425e-07" iyz="9.1928023e-10" />
+    </inertial>
+    <collision name="fr_coxa_hull">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/spyder/coxa_hull.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="fr_femur">
+    <visual name="invisible_frame">
+      <geometry>
+        <sphere radius="0.000000001" />
+      </geometry>
+      <material name="fr_femur_invisible">
+        <color rgba="0 0 0 0" />
+      </material>
+    </visual>
+    <inertial>
+      <origin xyz="0.03898323475 -0.0002884930937 8.498217234e-05" rpy="0 0 0" />
+      <mass value="0.13602657" />
+      <inertia ixx="2.9317062e-05" iyy="0.00013240691" izz="0.00014820772" ixy="3.502677e-06" ixz="-2.8589442e-08" iyz="-1.0134141e-07" />
+    </inertial>
+    <collision name="fr_femur_hull">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/spyder/femur_hull.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="fr_tibia">
+    <visual name="invisible_frame">
+      <geometry>
+        <sphere radius="0.000000001" />
+      </geometry>
+      <material name="fr_tibia_invisible">
+        <color rgba="0 0 0 0" />
+      </material>
+    </visual>
+    <inertial>
+      <origin xyz="-0.0003959107959 9.991303076e-05 -0.0617909485" rpy="0 0 0" />
+      <mass value="0.029400343" />
+      <inertia ixx="8.3457715e-05" iyy="6.8670336e-05" izz="1.7195959e-05" ixy="2.0792748e-07" ixz="6.5043642e-08" iyz="4.5764738e-07" />
+    </inertial>
+    <collision name="fr_tibia_hull">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/spyder/tibia_hull.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="fr_thigh_servo_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="fr_thigh_servo">
+      <geometry>
+        <mesh filename="meshes/spyder/thigh_servo.stl" scale="1 1 1" />
+      </geometry>
+      <material name="fr_thigh_servo_color">
+        <color rgba="0.19 0.22 0.26 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="fr_thigh_servo_attachment" type="fixed">
+    <parent link="fr_base" />
+    <child link="fr_thigh_servo_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="fr_thigh_cradle_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="fr_thigh_cradle">
+      <geometry>
+        <mesh filename="meshes/spyder/thigh_cradle.stl" scale="1 1 1" />
+      </geometry>
+      <material name="fr_thigh_cradle_color">
+        <color rgba="0.05 0.43 0.46 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="fr_thigh_cradle_attachment" type="fixed">
+    <parent link="fr_base" />
+    <child link="fr_thigh_cradle_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="fr_thigh_cover_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="fr_thigh_cover">
+      <geometry>
+        <mesh filename="meshes/spyder/thigh_cover.stl" scale="1 1 1" />
+      </geometry>
+      <material name="fr_thigh_cover_color">
+        <color rgba="0.12 0.78 0.83 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="fr_thigh_cover_attachment" type="fixed">
+    <parent link="fr_base" />
+    <child link="fr_thigh_cover_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="fr_coupling_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="fr_coupling">
+      <geometry>
+        <mesh filename="meshes/spyder/coupling.stl" scale="1 1 1" />
+      </geometry>
+      <material name="fr_coupling_color">
+        <color rgba="0.18 0.42 0.72 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="fr_coupling_attachment" type="fixed">
+    <parent link="fr_coxa" />
+    <child link="fr_coupling_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="fr_leg_servos_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="fr_leg_servos">
+      <geometry>
+        <mesh filename="meshes/spyder/leg_servos.stl" scale="1 1 1" />
+      </geometry>
+      <material name="fr_leg_servos_color">
+        <color rgba="0.19 0.22 0.26 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="fr_leg_servos_attachment" type="fixed">
+    <parent link="fr_femur" />
+    <child link="fr_leg_servos_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="fr_leg_cradle_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="fr_leg_cradle">
+      <geometry>
+        <mesh filename="meshes/spyder/leg_cradle.stl" scale="1 1 1" />
+      </geometry>
+      <material name="fr_leg_cradle_color">
+        <color rgba="0.05 0.43 0.46 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="fr_leg_cradle_attachment" type="fixed">
+    <parent link="fr_femur" />
+    <child link="fr_leg_cradle_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="fr_leg_cover_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="fr_leg_cover">
+      <geometry>
+        <mesh filename="meshes/spyder/leg_cover.stl" scale="1 1 1" />
+      </geometry>
+      <material name="fr_leg_cover_color">
+        <color rgba="0.12 0.78 0.83 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="fr_leg_cover_attachment" type="fixed">
+    <parent link="fr_femur" />
+    <child link="fr_leg_cover_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="fr_foot_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="fr_foot">
+      <geometry>
+        <mesh filename="meshes/spyder/foot.stl" scale="1 1 1" />
+      </geometry>
+      <material name="fr_foot_color">
+        <color rgba="0.92 0.48 0.12 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="fr_foot_attachment" type="fixed">
+    <parent link="fr_tibia" />
+    <child link="fr_foot_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="fr_foot_pad_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="fr_foot_pad">
+      <geometry>
+        <mesh filename="meshes/spyder/foot_pad.stl" scale="1 1 1" />
+      </geometry>
+      <material name="fr_foot_pad_color">
+        <color rgba="0.19 0.22 0.26 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="fr_foot_pad_attachment" type="fixed">
+    <parent link="fr_tibia" />
+    <child link="fr_foot_pad_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <joint name="fr_mount" type="fixed">
+    <parent link="body" />
+    <child link="fr_base" />
+    <origin xyz="0.0669044342 0.1243580208 0.0297987" rpy="0 0 0.7853981634" />
+  </joint>
+  <joint name="fr_coxa_yaw" type="revolute">
+    <parent link="fr_base" />
+    <child link="fr_coxa" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit lower="-0.9599310886" upper="0.9599310886" effort="0.9" velocity="5.2" />
+    <dynamics damping="0.01" friction="0" />
+  </joint>
+  <joint name="fr_femur_pitch" type="revolute">
+    <parent link="fr_coxa" />
+    <child link="fr_femur" />
+    <origin xyz="0.04396450385 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.396263402" upper="1.396263402" effort="0.9" velocity="5.2" />
+    <dynamics damping="0.01" friction="0" />
+  </joint>
+  <joint name="fr_tibia_pitch" type="revolute">
+    <parent link="fr_femur" />
+    <child link="fr_tibia" />
+    <origin xyz="0.07596114773 0 0.0004094305038" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.570796327" upper="0.872664626" effort="0.9" velocity="5.2" />
+    <dynamics damping="0.01" friction="0" />
+  </joint>
+  <link name="fr_foot_tip">
+    <inertial>
+      <mass value="0.001" />
+      <inertia ixx="1e-7" iyy="1e-7" izz="1e-7" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <collision name="fr_foot_contact">
+      <origin xyz="0 0 0.006" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.006" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="fr_foot_tip_fixed" type="fixed">
+    <parent link="fr_tibia" />
+    <child link="fr_foot_tip" />
+    <origin xyz="-0.0003198520962 0.003362061524 -0.1611647955" rpy="0 0 0" />
+  </joint>
+  <link name="mr_base">
+    <visual name="invisible_frame">
+      <geometry>
+        <sphere radius="0.000000001" />
+      </geometry>
+      <material name="mr_base_invisible">
+        <color rgba="0 0 0 0" />
+      </material>
+    </visual>
+    <inertial>
+      <origin xyz="-0.01054227138 2.915380855e-05 6.404762321e-06" rpy="0 0 0" />
+      <mass value="0.069347052" />
+      <inertia ixx="1.5334462e-05" iyy="2.3136659e-05" izz="1.5056402e-05" ixy="3.214137e-09" ixz="-1.596147e-07" iyz="2.8278375e-09" />
+    </inertial>
+    <collision name="mr_base_hull">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/spyder/base_hull.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="mr_coxa">
+    <visual name="invisible_frame">
+      <geometry>
+        <sphere radius="0.000000001" />
+      </geometry>
+      <material name="mr_coxa_invisible">
+        <color rgba="0 0 0 0" />
+      </material>
+    </visual>
+    <inertial>
+      <origin xyz="0.02198297344 0.000280634117 0.0002753372676" rpy="0 0 0" />
+      <mass value="0.015720499" />
+      <inertia ixx="1.1579465e-05" iyy="9.7143667e-06" izz="9.7143205e-06" ixy="-2.2874679e-07" ixz="2.2874425e-07" iyz="9.1928023e-10" />
+    </inertial>
+    <collision name="mr_coxa_hull">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/spyder/coxa_hull.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="mr_femur">
+    <visual name="invisible_frame">
+      <geometry>
+        <sphere radius="0.000000001" />
+      </geometry>
+      <material name="mr_femur_invisible">
+        <color rgba="0 0 0 0" />
+      </material>
+    </visual>
+    <inertial>
+      <origin xyz="0.03898323475 -0.0002884930937 8.498217234e-05" rpy="0 0 0" />
+      <mass value="0.13602657" />
+      <inertia ixx="2.9317062e-05" iyy="0.00013240691" izz="0.00014820772" ixy="3.502677e-06" ixz="-2.8589442e-08" iyz="-1.0134141e-07" />
+    </inertial>
+    <collision name="mr_femur_hull">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/spyder/femur_hull.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="mr_tibia">
+    <visual name="invisible_frame">
+      <geometry>
+        <sphere radius="0.000000001" />
+      </geometry>
+      <material name="mr_tibia_invisible">
+        <color rgba="0 0 0 0" />
+      </material>
+    </visual>
+    <inertial>
+      <origin xyz="-0.0003959107959 9.991303076e-05 -0.0617909485" rpy="0 0 0" />
+      <mass value="0.029400343" />
+      <inertia ixx="8.3457715e-05" iyy="6.8670336e-05" izz="1.7195959e-05" ixy="2.0792748e-07" ixz="6.5043642e-08" iyz="4.5764738e-07" />
+    </inertial>
+    <collision name="mr_tibia_hull">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/spyder/tibia_hull.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="mr_thigh_servo_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="mr_thigh_servo">
+      <geometry>
+        <mesh filename="meshes/spyder/thigh_servo.stl" scale="1 1 1" />
+      </geometry>
+      <material name="mr_thigh_servo_color">
+        <color rgba="0.19 0.22 0.26 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="mr_thigh_servo_attachment" type="fixed">
+    <parent link="mr_base" />
+    <child link="mr_thigh_servo_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="mr_thigh_cradle_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="mr_thigh_cradle">
+      <geometry>
+        <mesh filename="meshes/spyder/thigh_cradle.stl" scale="1 1 1" />
+      </geometry>
+      <material name="mr_thigh_cradle_color">
+        <color rgba="0.05 0.43 0.46 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="mr_thigh_cradle_attachment" type="fixed">
+    <parent link="mr_base" />
+    <child link="mr_thigh_cradle_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="mr_thigh_cover_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="mr_thigh_cover">
+      <geometry>
+        <mesh filename="meshes/spyder/thigh_cover.stl" scale="1 1 1" />
+      </geometry>
+      <material name="mr_thigh_cover_color">
+        <color rgba="0.12 0.78 0.83 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="mr_thigh_cover_attachment" type="fixed">
+    <parent link="mr_base" />
+    <child link="mr_thigh_cover_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="mr_coupling_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="mr_coupling">
+      <geometry>
+        <mesh filename="meshes/spyder/coupling.stl" scale="1 1 1" />
+      </geometry>
+      <material name="mr_coupling_color">
+        <color rgba="0.18 0.42 0.72 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="mr_coupling_attachment" type="fixed">
+    <parent link="mr_coxa" />
+    <child link="mr_coupling_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="mr_leg_servos_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="mr_leg_servos">
+      <geometry>
+        <mesh filename="meshes/spyder/leg_servos.stl" scale="1 1 1" />
+      </geometry>
+      <material name="mr_leg_servos_color">
+        <color rgba="0.19 0.22 0.26 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="mr_leg_servos_attachment" type="fixed">
+    <parent link="mr_femur" />
+    <child link="mr_leg_servos_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="mr_leg_cradle_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="mr_leg_cradle">
+      <geometry>
+        <mesh filename="meshes/spyder/leg_cradle.stl" scale="1 1 1" />
+      </geometry>
+      <material name="mr_leg_cradle_color">
+        <color rgba="0.05 0.43 0.46 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="mr_leg_cradle_attachment" type="fixed">
+    <parent link="mr_femur" />
+    <child link="mr_leg_cradle_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="mr_leg_cover_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="mr_leg_cover">
+      <geometry>
+        <mesh filename="meshes/spyder/leg_cover.stl" scale="1 1 1" />
+      </geometry>
+      <material name="mr_leg_cover_color">
+        <color rgba="0.12 0.78 0.83 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="mr_leg_cover_attachment" type="fixed">
+    <parent link="mr_femur" />
+    <child link="mr_leg_cover_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="mr_foot_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="mr_foot">
+      <geometry>
+        <mesh filename="meshes/spyder/foot.stl" scale="1 1 1" />
+      </geometry>
+      <material name="mr_foot_color">
+        <color rgba="0.92 0.48 0.12 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="mr_foot_attachment" type="fixed">
+    <parent link="mr_tibia" />
+    <child link="mr_foot_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="mr_foot_pad_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="mr_foot_pad">
+      <geometry>
+        <mesh filename="meshes/spyder/foot_pad.stl" scale="1 1 1" />
+      </geometry>
+      <material name="mr_foot_pad_color">
+        <color rgba="0.19 0.22 0.26 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="mr_foot_pad_attachment" type="fixed">
+    <parent link="mr_tibia" />
+    <child link="mr_foot_pad_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <joint name="mr_mount" type="fixed">
+    <parent link="body" />
+    <child link="mr_base" />
+    <origin xyz="0.09099673462 -0.0002095985413 0.0297987" rpy="0 0 0" />
+  </joint>
+  <joint name="mr_coxa_yaw" type="revolute">
+    <parent link="mr_base" />
+    <child link="mr_coxa" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit lower="-0.9599310886" upper="0.9599310886" effort="0.9" velocity="5.2" />
+    <dynamics damping="0.01" friction="0" />
+  </joint>
+  <joint name="mr_femur_pitch" type="revolute">
+    <parent link="mr_coxa" />
+    <child link="mr_femur" />
+    <origin xyz="0.04396450385 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.396263402" upper="1.396263402" effort="0.9" velocity="5.2" />
+    <dynamics damping="0.01" friction="0" />
+  </joint>
+  <joint name="mr_tibia_pitch" type="revolute">
+    <parent link="mr_femur" />
+    <child link="mr_tibia" />
+    <origin xyz="0.07596114773 0 0.0004094305038" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.570796327" upper="0.872664626" effort="0.9" velocity="5.2" />
+    <dynamics damping="0.01" friction="0" />
+  </joint>
+  <link name="mr_foot_tip">
+    <inertial>
+      <mass value="0.001" />
+      <inertia ixx="1e-7" iyy="1e-7" izz="1e-7" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <collision name="mr_foot_contact">
+      <origin xyz="0 0 0.006" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.006" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="mr_foot_tip_fixed" type="fixed">
+    <parent link="mr_tibia" />
+    <child link="mr_foot_tip" />
+    <origin xyz="-0.0003198520962 0.003362061524 -0.1611647955" rpy="0 0 0" />
+  </joint>
+  <link name="rr_base">
+    <visual name="invisible_frame">
+      <geometry>
+        <sphere radius="0.000000001" />
+      </geometry>
+      <material name="rr_base_invisible">
+        <color rgba="0 0 0 0" />
+      </material>
+    </visual>
+    <inertial>
+      <origin xyz="-0.01054227138 2.915380855e-05 6.404762321e-06" rpy="0 0 0" />
+      <mass value="0.069347052" />
+      <inertia ixx="1.5334462e-05" iyy="2.3136659e-05" izz="1.5056402e-05" ixy="3.214137e-09" ixz="-1.596147e-07" iyz="2.8278375e-09" />
+    </inertial>
+    <collision name="rr_base_hull">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/spyder/base_hull.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="rr_coxa">
+    <visual name="invisible_frame">
+      <geometry>
+        <sphere radius="0.000000001" />
+      </geometry>
+      <material name="rr_coxa_invisible">
+        <color rgba="0 0 0 0" />
+      </material>
+    </visual>
+    <inertial>
+      <origin xyz="0.02198297344 0.000280634117 0.0002753372676" rpy="0 0 0" />
+      <mass value="0.015720499" />
+      <inertia ixx="1.1579465e-05" iyy="9.7143667e-06" izz="9.7143205e-06" ixy="-2.2874679e-07" ixz="2.2874425e-07" iyz="9.1928023e-10" />
+    </inertial>
+    <collision name="rr_coxa_hull">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/spyder/coxa_hull.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="rr_femur">
+    <visual name="invisible_frame">
+      <geometry>
+        <sphere radius="0.000000001" />
+      </geometry>
+      <material name="rr_femur_invisible">
+        <color rgba="0 0 0 0" />
+      </material>
+    </visual>
+    <inertial>
+      <origin xyz="0.03898323475 -0.0002884930937 8.498217234e-05" rpy="0 0 0" />
+      <mass value="0.13602657" />
+      <inertia ixx="2.9317062e-05" iyy="0.00013240691" izz="0.00014820772" ixy="3.502677e-06" ixz="-2.8589442e-08" iyz="-1.0134141e-07" />
+    </inertial>
+    <collision name="rr_femur_hull">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/spyder/femur_hull.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="rr_tibia">
+    <visual name="invisible_frame">
+      <geometry>
+        <sphere radius="0.000000001" />
+      </geometry>
+      <material name="rr_tibia_invisible">
+        <color rgba="0 0 0 0" />
+      </material>
+    </visual>
+    <inertial>
+      <origin xyz="-0.0003959107959 9.991303076e-05 -0.0617909485" rpy="0 0 0" />
+      <mass value="0.029400343" />
+      <inertia ixx="8.3457715e-05" iyy="6.8670336e-05" izz="1.7195959e-05" ixy="2.0792748e-07" ixz="6.5043642e-08" iyz="4.5764738e-07" />
+    </inertial>
+    <collision name="rr_tibia_hull">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/spyder/tibia_hull.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="rr_thigh_servo_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="rr_thigh_servo">
+      <geometry>
+        <mesh filename="meshes/spyder/thigh_servo.stl" scale="1 1 1" />
+      </geometry>
+      <material name="rr_thigh_servo_color">
+        <color rgba="0.19 0.22 0.26 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="rr_thigh_servo_attachment" type="fixed">
+    <parent link="rr_base" />
+    <child link="rr_thigh_servo_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="rr_thigh_cradle_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="rr_thigh_cradle">
+      <geometry>
+        <mesh filename="meshes/spyder/thigh_cradle.stl" scale="1 1 1" />
+      </geometry>
+      <material name="rr_thigh_cradle_color">
+        <color rgba="0.05 0.43 0.46 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="rr_thigh_cradle_attachment" type="fixed">
+    <parent link="rr_base" />
+    <child link="rr_thigh_cradle_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="rr_thigh_cover_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="rr_thigh_cover">
+      <geometry>
+        <mesh filename="meshes/spyder/thigh_cover.stl" scale="1 1 1" />
+      </geometry>
+      <material name="rr_thigh_cover_color">
+        <color rgba="0.12 0.78 0.83 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="rr_thigh_cover_attachment" type="fixed">
+    <parent link="rr_base" />
+    <child link="rr_thigh_cover_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="rr_coupling_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="rr_coupling">
+      <geometry>
+        <mesh filename="meshes/spyder/coupling.stl" scale="1 1 1" />
+      </geometry>
+      <material name="rr_coupling_color">
+        <color rgba="0.18 0.42 0.72 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="rr_coupling_attachment" type="fixed">
+    <parent link="rr_coxa" />
+    <child link="rr_coupling_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="rr_leg_servos_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="rr_leg_servos">
+      <geometry>
+        <mesh filename="meshes/spyder/leg_servos.stl" scale="1 1 1" />
+      </geometry>
+      <material name="rr_leg_servos_color">
+        <color rgba="0.19 0.22 0.26 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="rr_leg_servos_attachment" type="fixed">
+    <parent link="rr_femur" />
+    <child link="rr_leg_servos_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="rr_leg_cradle_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="rr_leg_cradle">
+      <geometry>
+        <mesh filename="meshes/spyder/leg_cradle.stl" scale="1 1 1" />
+      </geometry>
+      <material name="rr_leg_cradle_color">
+        <color rgba="0.05 0.43 0.46 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="rr_leg_cradle_attachment" type="fixed">
+    <parent link="rr_femur" />
+    <child link="rr_leg_cradle_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="rr_leg_cover_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="rr_leg_cover">
+      <geometry>
+        <mesh filename="meshes/spyder/leg_cover.stl" scale="1 1 1" />
+      </geometry>
+      <material name="rr_leg_cover_color">
+        <color rgba="0.12 0.78 0.83 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="rr_leg_cover_attachment" type="fixed">
+    <parent link="rr_femur" />
+    <child link="rr_leg_cover_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="rr_foot_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="rr_foot">
+      <geometry>
+        <mesh filename="meshes/spyder/foot.stl" scale="1 1 1" />
+      </geometry>
+      <material name="rr_foot_color">
+        <color rgba="0.92 0.48 0.12 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="rr_foot_attachment" type="fixed">
+    <parent link="rr_tibia" />
+    <child link="rr_foot_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="rr_foot_pad_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="rr_foot_pad">
+      <geometry>
+        <mesh filename="meshes/spyder/foot_pad.stl" scale="1 1 1" />
+      </geometry>
+      <material name="rr_foot_pad_color">
+        <color rgba="0.19 0.22 0.26 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="rr_foot_pad_attachment" type="fixed">
+    <parent link="rr_tibia" />
+    <child link="rr_foot_pad_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <joint name="rr_mount" type="fixed">
+    <parent link="body" />
+    <child link="rr_base" />
+    <origin xyz="0.06644803143 -0.124494442 0.0297987" rpy="0 0 -0.7853981634" />
+  </joint>
+  <joint name="rr_coxa_yaw" type="revolute">
+    <parent link="rr_base" />
+    <child link="rr_coxa" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit lower="-0.9599310886" upper="0.9599310886" effort="0.9" velocity="5.2" />
+    <dynamics damping="0.01" friction="0" />
+  </joint>
+  <joint name="rr_femur_pitch" type="revolute">
+    <parent link="rr_coxa" />
+    <child link="rr_femur" />
+    <origin xyz="0.04396450385 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.396263402" upper="1.396263402" effort="0.9" velocity="5.2" />
+    <dynamics damping="0.01" friction="0" />
+  </joint>
+  <joint name="rr_tibia_pitch" type="revolute">
+    <parent link="rr_femur" />
+    <child link="rr_tibia" />
+    <origin xyz="0.07596114773 0 0.0004094305038" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.570796327" upper="0.872664626" effort="0.9" velocity="5.2" />
+    <dynamics damping="0.01" friction="0" />
+  </joint>
+  <link name="rr_foot_tip">
+    <inertial>
+      <mass value="0.001" />
+      <inertia ixx="1e-7" iyy="1e-7" izz="1e-7" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <collision name="rr_foot_contact">
+      <origin xyz="0 0 0.006" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.006" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="rr_foot_tip_fixed" type="fixed">
+    <parent link="rr_tibia" />
+    <child link="rr_foot_tip" />
+    <origin xyz="-0.0003198520962 0.003362061524 -0.1611647955" rpy="0 0 0" />
+  </joint>
+  <link name="fl_base">
+    <visual name="invisible_frame">
+      <geometry>
+        <sphere radius="0.000000001" />
+      </geometry>
+      <material name="fl_base_invisible">
+        <color rgba="0 0 0 0" />
+      </material>
+    </visual>
+    <inertial>
+      <origin xyz="-0.01054227138 2.915380855e-05 6.404762321e-06" rpy="0 0 0" />
+      <mass value="0.069347052" />
+      <inertia ixx="1.5334462e-05" iyy="2.3136659e-05" izz="1.5056402e-05" ixy="3.214137e-09" ixz="-1.596147e-07" iyz="2.8278375e-09" />
+    </inertial>
+    <collision name="fl_base_hull">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/spyder/base_hull.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="fl_coxa">
+    <visual name="invisible_frame">
+      <geometry>
+        <sphere radius="0.000000001" />
+      </geometry>
+      <material name="fl_coxa_invisible">
+        <color rgba="0 0 0 0" />
+      </material>
+    </visual>
+    <inertial>
+      <origin xyz="0.02198297344 0.000280634117 0.0002753372676" rpy="0 0 0" />
+      <mass value="0.015720499" />
+      <inertia ixx="1.1579465e-05" iyy="9.7143667e-06" izz="9.7143205e-06" ixy="-2.2874679e-07" ixz="2.2874425e-07" iyz="9.1928023e-10" />
+    </inertial>
+    <collision name="fl_coxa_hull">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/spyder/coxa_hull.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="fl_femur">
+    <visual name="invisible_frame">
+      <geometry>
+        <sphere radius="0.000000001" />
+      </geometry>
+      <material name="fl_femur_invisible">
+        <color rgba="0 0 0 0" />
+      </material>
+    </visual>
+    <inertial>
+      <origin xyz="0.03898323475 -0.0002884930937 8.498217234e-05" rpy="0 0 0" />
+      <mass value="0.13602657" />
+      <inertia ixx="2.9317062e-05" iyy="0.00013240691" izz="0.00014820772" ixy="3.502677e-06" ixz="-2.8589442e-08" iyz="-1.0134141e-07" />
+    </inertial>
+    <collision name="fl_femur_hull">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/spyder/femur_hull.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="fl_tibia">
+    <visual name="invisible_frame">
+      <geometry>
+        <sphere radius="0.000000001" />
+      </geometry>
+      <material name="fl_tibia_invisible">
+        <color rgba="0 0 0 0" />
+      </material>
+    </visual>
+    <inertial>
+      <origin xyz="-0.0003959107959 9.991303076e-05 -0.0617909485" rpy="0 0 0" />
+      <mass value="0.029400343" />
+      <inertia ixx="8.3457715e-05" iyy="6.8670336e-05" izz="1.7195959e-05" ixy="2.0792748e-07" ixz="6.5043642e-08" iyz="4.5764738e-07" />
+    </inertial>
+    <collision name="fl_tibia_hull">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/spyder/tibia_hull.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="fl_thigh_servo_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="fl_thigh_servo">
+      <geometry>
+        <mesh filename="meshes/spyder/thigh_servo.stl" scale="1 1 1" />
+      </geometry>
+      <material name="fl_thigh_servo_color">
+        <color rgba="0.19 0.22 0.26 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="fl_thigh_servo_attachment" type="fixed">
+    <parent link="fl_base" />
+    <child link="fl_thigh_servo_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="fl_thigh_cradle_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="fl_thigh_cradle">
+      <geometry>
+        <mesh filename="meshes/spyder/thigh_cradle.stl" scale="1 1 1" />
+      </geometry>
+      <material name="fl_thigh_cradle_color">
+        <color rgba="0.05 0.43 0.46 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="fl_thigh_cradle_attachment" type="fixed">
+    <parent link="fl_base" />
+    <child link="fl_thigh_cradle_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="fl_thigh_cover_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="fl_thigh_cover">
+      <geometry>
+        <mesh filename="meshes/spyder/thigh_cover.stl" scale="1 1 1" />
+      </geometry>
+      <material name="fl_thigh_cover_color">
+        <color rgba="0.12 0.78 0.83 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="fl_thigh_cover_attachment" type="fixed">
+    <parent link="fl_base" />
+    <child link="fl_thigh_cover_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="fl_coupling_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="fl_coupling">
+      <geometry>
+        <mesh filename="meshes/spyder/coupling.stl" scale="1 1 1" />
+      </geometry>
+      <material name="fl_coupling_color">
+        <color rgba="0.18 0.42 0.72 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="fl_coupling_attachment" type="fixed">
+    <parent link="fl_coxa" />
+    <child link="fl_coupling_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="fl_leg_servos_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="fl_leg_servos">
+      <geometry>
+        <mesh filename="meshes/spyder/leg_servos.stl" scale="1 1 1" />
+      </geometry>
+      <material name="fl_leg_servos_color">
+        <color rgba="0.19 0.22 0.26 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="fl_leg_servos_attachment" type="fixed">
+    <parent link="fl_femur" />
+    <child link="fl_leg_servos_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="fl_leg_cradle_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="fl_leg_cradle">
+      <geometry>
+        <mesh filename="meshes/spyder/leg_cradle.stl" scale="1 1 1" />
+      </geometry>
+      <material name="fl_leg_cradle_color">
+        <color rgba="0.05 0.43 0.46 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="fl_leg_cradle_attachment" type="fixed">
+    <parent link="fl_femur" />
+    <child link="fl_leg_cradle_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="fl_leg_cover_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="fl_leg_cover">
+      <geometry>
+        <mesh filename="meshes/spyder/leg_cover.stl" scale="1 1 1" />
+      </geometry>
+      <material name="fl_leg_cover_color">
+        <color rgba="0.12 0.78 0.83 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="fl_leg_cover_attachment" type="fixed">
+    <parent link="fl_femur" />
+    <child link="fl_leg_cover_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="fl_foot_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="fl_foot">
+      <geometry>
+        <mesh filename="meshes/spyder/foot.stl" scale="1 1 1" />
+      </geometry>
+      <material name="fl_foot_color">
+        <color rgba="0.92 0.48 0.12 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="fl_foot_attachment" type="fixed">
+    <parent link="fl_tibia" />
+    <child link="fl_foot_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="fl_foot_pad_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="fl_foot_pad">
+      <geometry>
+        <mesh filename="meshes/spyder/foot_pad.stl" scale="1 1 1" />
+      </geometry>
+      <material name="fl_foot_pad_color">
+        <color rgba="0.19 0.22 0.26 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="fl_foot_pad_attachment" type="fixed">
+    <parent link="fl_tibia" />
+    <child link="fl_foot_pad_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <joint name="fl_mount" type="fixed">
+    <parent link="body" />
+    <child link="fl_base" />
+    <origin xyz="-0.06644803119 0.1244944274 0.0297987" rpy="0 0 2.35619449" />
+  </joint>
+  <joint name="fl_coxa_yaw" type="revolute">
+    <parent link="fl_base" />
+    <child link="fl_coxa" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit lower="-0.9599310886" upper="0.9599310886" effort="0.9" velocity="5.2" />
+    <dynamics damping="0.01" friction="0" />
+  </joint>
+  <joint name="fl_femur_pitch" type="revolute">
+    <parent link="fl_coxa" />
+    <child link="fl_femur" />
+    <origin xyz="0.04396450385 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.396263402" upper="1.396263402" effort="0.9" velocity="5.2" />
+    <dynamics damping="0.01" friction="0" />
+  </joint>
+  <joint name="fl_tibia_pitch" type="revolute">
+    <parent link="fl_femur" />
+    <child link="fl_tibia" />
+    <origin xyz="0.07596114773 0 0.0004094305038" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.570796327" upper="0.872664626" effort="0.9" velocity="5.2" />
+    <dynamics damping="0.01" friction="0" />
+  </joint>
+  <link name="fl_foot_tip">
+    <inertial>
+      <mass value="0.001" />
+      <inertia ixx="1e-7" iyy="1e-7" izz="1e-7" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <collision name="fl_foot_contact">
+      <origin xyz="0 0 0.006" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.006" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="fl_foot_tip_fixed" type="fixed">
+    <parent link="fl_tibia" />
+    <child link="fl_foot_tip" />
+    <origin xyz="-0.0003198520962 0.003362061524 -0.1611647955" rpy="0 0 0" />
+  </joint>
+  <link name="ml_base">
+    <visual name="invisible_frame">
+      <geometry>
+        <sphere radius="0.000000001" />
+      </geometry>
+      <material name="ml_base_invisible">
+        <color rgba="0 0 0 0" />
+      </material>
+    </visual>
+    <inertial>
+      <origin xyz="-0.01054227138 2.915380855e-05 6.404762321e-06" rpy="0 0 0" />
+      <mass value="0.069347052" />
+      <inertia ixx="1.5334462e-05" iyy="2.3136659e-05" izz="1.5056402e-05" ixy="3.214137e-09" ixz="-1.596147e-07" iyz="2.8278375e-09" />
+    </inertial>
+    <collision name="ml_base_hull">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/spyder/base_hull.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="ml_coxa">
+    <visual name="invisible_frame">
+      <geometry>
+        <sphere radius="0.000000001" />
+      </geometry>
+      <material name="ml_coxa_invisible">
+        <color rgba="0 0 0 0" />
+      </material>
+    </visual>
+    <inertial>
+      <origin xyz="0.02198297344 0.000280634117 0.0002753372676" rpy="0 0 0" />
+      <mass value="0.015720499" />
+      <inertia ixx="1.1579465e-05" iyy="9.7143667e-06" izz="9.7143205e-06" ixy="-2.2874679e-07" ixz="2.2874425e-07" iyz="9.1928023e-10" />
+    </inertial>
+    <collision name="ml_coxa_hull">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/spyder/coxa_hull.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="ml_femur">
+    <visual name="invisible_frame">
+      <geometry>
+        <sphere radius="0.000000001" />
+      </geometry>
+      <material name="ml_femur_invisible">
+        <color rgba="0 0 0 0" />
+      </material>
+    </visual>
+    <inertial>
+      <origin xyz="0.03898323475 -0.0002884930937 8.498217234e-05" rpy="0 0 0" />
+      <mass value="0.13602657" />
+      <inertia ixx="2.9317062e-05" iyy="0.00013240691" izz="0.00014820772" ixy="3.502677e-06" ixz="-2.8589442e-08" iyz="-1.0134141e-07" />
+    </inertial>
+    <collision name="ml_femur_hull">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/spyder/femur_hull.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="ml_tibia">
+    <visual name="invisible_frame">
+      <geometry>
+        <sphere radius="0.000000001" />
+      </geometry>
+      <material name="ml_tibia_invisible">
+        <color rgba="0 0 0 0" />
+      </material>
+    </visual>
+    <inertial>
+      <origin xyz="-0.0003959107959 9.991303076e-05 -0.0617909485" rpy="0 0 0" />
+      <mass value="0.029400343" />
+      <inertia ixx="8.3457715e-05" iyy="6.8670336e-05" izz="1.7195959e-05" ixy="2.0792748e-07" ixz="6.5043642e-08" iyz="4.5764738e-07" />
+    </inertial>
+    <collision name="ml_tibia_hull">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/spyder/tibia_hull.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="ml_thigh_servo_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="ml_thigh_servo">
+      <geometry>
+        <mesh filename="meshes/spyder/thigh_servo.stl" scale="1 1 1" />
+      </geometry>
+      <material name="ml_thigh_servo_color">
+        <color rgba="0.19 0.22 0.26 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="ml_thigh_servo_attachment" type="fixed">
+    <parent link="ml_base" />
+    <child link="ml_thigh_servo_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="ml_thigh_cradle_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="ml_thigh_cradle">
+      <geometry>
+        <mesh filename="meshes/spyder/thigh_cradle.stl" scale="1 1 1" />
+      </geometry>
+      <material name="ml_thigh_cradle_color">
+        <color rgba="0.05 0.43 0.46 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="ml_thigh_cradle_attachment" type="fixed">
+    <parent link="ml_base" />
+    <child link="ml_thigh_cradle_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="ml_thigh_cover_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="ml_thigh_cover">
+      <geometry>
+        <mesh filename="meshes/spyder/thigh_cover.stl" scale="1 1 1" />
+      </geometry>
+      <material name="ml_thigh_cover_color">
+        <color rgba="0.12 0.78 0.83 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="ml_thigh_cover_attachment" type="fixed">
+    <parent link="ml_base" />
+    <child link="ml_thigh_cover_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="ml_coupling_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="ml_coupling">
+      <geometry>
+        <mesh filename="meshes/spyder/coupling.stl" scale="1 1 1" />
+      </geometry>
+      <material name="ml_coupling_color">
+        <color rgba="0.18 0.42 0.72 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="ml_coupling_attachment" type="fixed">
+    <parent link="ml_coxa" />
+    <child link="ml_coupling_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="ml_leg_servos_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="ml_leg_servos">
+      <geometry>
+        <mesh filename="meshes/spyder/leg_servos.stl" scale="1 1 1" />
+      </geometry>
+      <material name="ml_leg_servos_color">
+        <color rgba="0.19 0.22 0.26 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="ml_leg_servos_attachment" type="fixed">
+    <parent link="ml_femur" />
+    <child link="ml_leg_servos_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="ml_leg_cradle_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="ml_leg_cradle">
+      <geometry>
+        <mesh filename="meshes/spyder/leg_cradle.stl" scale="1 1 1" />
+      </geometry>
+      <material name="ml_leg_cradle_color">
+        <color rgba="0.05 0.43 0.46 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="ml_leg_cradle_attachment" type="fixed">
+    <parent link="ml_femur" />
+    <child link="ml_leg_cradle_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="ml_leg_cover_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="ml_leg_cover">
+      <geometry>
+        <mesh filename="meshes/spyder/leg_cover.stl" scale="1 1 1" />
+      </geometry>
+      <material name="ml_leg_cover_color">
+        <color rgba="0.12 0.78 0.83 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="ml_leg_cover_attachment" type="fixed">
+    <parent link="ml_femur" />
+    <child link="ml_leg_cover_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="ml_foot_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="ml_foot">
+      <geometry>
+        <mesh filename="meshes/spyder/foot.stl" scale="1 1 1" />
+      </geometry>
+      <material name="ml_foot_color">
+        <color rgba="0.92 0.48 0.12 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="ml_foot_attachment" type="fixed">
+    <parent link="ml_tibia" />
+    <child link="ml_foot_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="ml_foot_pad_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="ml_foot_pad">
+      <geometry>
+        <mesh filename="meshes/spyder/foot_pad.stl" scale="1 1 1" />
+      </geometry>
+      <material name="ml_foot_pad_color">
+        <color rgba="0.19 0.22 0.26 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="ml_foot_pad_attachment" type="fixed">
+    <parent link="ml_tibia" />
+    <child link="ml_foot_pad_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <joint name="ml_mount" type="fixed">
+    <parent link="body" />
+    <child link="ml_base" />
+    <origin xyz="-0.09099673271 0.0002095832825 0.0297987" rpy="0 0 3.141592654" />
+  </joint>
+  <joint name="ml_coxa_yaw" type="revolute">
+    <parent link="ml_base" />
+    <child link="ml_coxa" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit lower="-0.9599310886" upper="0.9599310886" effort="0.9" velocity="5.2" />
+    <dynamics damping="0.01" friction="0" />
+  </joint>
+  <joint name="ml_femur_pitch" type="revolute">
+    <parent link="ml_coxa" />
+    <child link="ml_femur" />
+    <origin xyz="0.04396450385 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.396263402" upper="1.396263402" effort="0.9" velocity="5.2" />
+    <dynamics damping="0.01" friction="0" />
+  </joint>
+  <joint name="ml_tibia_pitch" type="revolute">
+    <parent link="ml_femur" />
+    <child link="ml_tibia" />
+    <origin xyz="0.07596114773 0 0.0004094305038" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.570796327" upper="0.872664626" effort="0.9" velocity="5.2" />
+    <dynamics damping="0.01" friction="0" />
+  </joint>
+  <link name="ml_foot_tip">
+    <inertial>
+      <mass value="0.001" />
+      <inertia ixx="1e-7" iyy="1e-7" izz="1e-7" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <collision name="ml_foot_contact">
+      <origin xyz="0 0 0.006" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.006" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="ml_foot_tip_fixed" type="fixed">
+    <parent link="ml_tibia" />
+    <child link="ml_foot_tip" />
+    <origin xyz="-0.0003198520962 0.003362061524 -0.1611647955" rpy="0 0 0" />
+  </joint>
+  <link name="rl_base">
+    <visual name="invisible_frame">
+      <geometry>
+        <sphere radius="0.000000001" />
+      </geometry>
+      <material name="rl_base_invisible">
+        <color rgba="0 0 0 0" />
+      </material>
+    </visual>
+    <inertial>
+      <origin xyz="-0.01054227138 2.915380855e-05 6.404762321e-06" rpy="0 0 0" />
+      <mass value="0.069347052" />
+      <inertia ixx="1.5334462e-05" iyy="2.3136659e-05" izz="1.5056402e-05" ixy="3.214137e-09" ixz="-1.596147e-07" iyz="2.8278375e-09" />
+    </inertial>
+    <collision name="rl_base_hull">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/spyder/base_hull.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="rl_coxa">
+    <visual name="invisible_frame">
+      <geometry>
+        <sphere radius="0.000000001" />
+      </geometry>
+      <material name="rl_coxa_invisible">
+        <color rgba="0 0 0 0" />
+      </material>
+    </visual>
+    <inertial>
+      <origin xyz="0.02198297344 0.000280634117 0.0002753372676" rpy="0 0 0" />
+      <mass value="0.015720499" />
+      <inertia ixx="1.1579465e-05" iyy="9.7143667e-06" izz="9.7143205e-06" ixy="-2.2874679e-07" ixz="2.2874425e-07" iyz="9.1928023e-10" />
+    </inertial>
+    <collision name="rl_coxa_hull">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/spyder/coxa_hull.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="rl_femur">
+    <visual name="invisible_frame">
+      <geometry>
+        <sphere radius="0.000000001" />
+      </geometry>
+      <material name="rl_femur_invisible">
+        <color rgba="0 0 0 0" />
+      </material>
+    </visual>
+    <inertial>
+      <origin xyz="0.03898323475 -0.0002884930937 8.498217234e-05" rpy="0 0 0" />
+      <mass value="0.13602657" />
+      <inertia ixx="2.9317062e-05" iyy="0.00013240691" izz="0.00014820772" ixy="3.502677e-06" ixz="-2.8589442e-08" iyz="-1.0134141e-07" />
+    </inertial>
+    <collision name="rl_femur_hull">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/spyder/femur_hull.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="rl_tibia">
+    <visual name="invisible_frame">
+      <geometry>
+        <sphere radius="0.000000001" />
+      </geometry>
+      <material name="rl_tibia_invisible">
+        <color rgba="0 0 0 0" />
+      </material>
+    </visual>
+    <inertial>
+      <origin xyz="-0.0003959107959 9.991303076e-05 -0.0617909485" rpy="0 0 0" />
+      <mass value="0.029400343" />
+      <inertia ixx="8.3457715e-05" iyy="6.8670336e-05" izz="1.7195959e-05" ixy="2.0792748e-07" ixz="6.5043642e-08" iyz="4.5764738e-07" />
+    </inertial>
+    <collision name="rl_tibia_hull">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/spyder/tibia_hull.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="rl_thigh_servo_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="rl_thigh_servo">
+      <geometry>
+        <mesh filename="meshes/spyder/thigh_servo.stl" scale="1 1 1" />
+      </geometry>
+      <material name="rl_thigh_servo_color">
+        <color rgba="0.19 0.22 0.26 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="rl_thigh_servo_attachment" type="fixed">
+    <parent link="rl_base" />
+    <child link="rl_thigh_servo_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="rl_thigh_cradle_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="rl_thigh_cradle">
+      <geometry>
+        <mesh filename="meshes/spyder/thigh_cradle.stl" scale="1 1 1" />
+      </geometry>
+      <material name="rl_thigh_cradle_color">
+        <color rgba="0.05 0.43 0.46 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="rl_thigh_cradle_attachment" type="fixed">
+    <parent link="rl_base" />
+    <child link="rl_thigh_cradle_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="rl_thigh_cover_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="rl_thigh_cover">
+      <geometry>
+        <mesh filename="meshes/spyder/thigh_cover.stl" scale="1 1 1" />
+      </geometry>
+      <material name="rl_thigh_cover_color">
+        <color rgba="0.12 0.78 0.83 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="rl_thigh_cover_attachment" type="fixed">
+    <parent link="rl_base" />
+    <child link="rl_thigh_cover_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="rl_coupling_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="rl_coupling">
+      <geometry>
+        <mesh filename="meshes/spyder/coupling.stl" scale="1 1 1" />
+      </geometry>
+      <material name="rl_coupling_color">
+        <color rgba="0.18 0.42 0.72 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="rl_coupling_attachment" type="fixed">
+    <parent link="rl_coxa" />
+    <child link="rl_coupling_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="rl_leg_servos_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="rl_leg_servos">
+      <geometry>
+        <mesh filename="meshes/spyder/leg_servos.stl" scale="1 1 1" />
+      </geometry>
+      <material name="rl_leg_servos_color">
+        <color rgba="0.19 0.22 0.26 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="rl_leg_servos_attachment" type="fixed">
+    <parent link="rl_femur" />
+    <child link="rl_leg_servos_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="rl_leg_cradle_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="rl_leg_cradle">
+      <geometry>
+        <mesh filename="meshes/spyder/leg_cradle.stl" scale="1 1 1" />
+      </geometry>
+      <material name="rl_leg_cradle_color">
+        <color rgba="0.05 0.43 0.46 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="rl_leg_cradle_attachment" type="fixed">
+    <parent link="rl_femur" />
+    <child link="rl_leg_cradle_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="rl_leg_cover_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="rl_leg_cover">
+      <geometry>
+        <mesh filename="meshes/spyder/leg_cover.stl" scale="1 1 1" />
+      </geometry>
+      <material name="rl_leg_cover_color">
+        <color rgba="0.12 0.78 0.83 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="rl_leg_cover_attachment" type="fixed">
+    <parent link="rl_femur" />
+    <child link="rl_leg_cover_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="rl_foot_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="rl_foot">
+      <geometry>
+        <mesh filename="meshes/spyder/foot.stl" scale="1 1 1" />
+      </geometry>
+      <material name="rl_foot_color">
+        <color rgba="0.92 0.48 0.12 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="rl_foot_attachment" type="fixed">
+    <parent link="rl_tibia" />
+    <child link="rl_foot_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="rl_foot_pad_visual">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="rl_foot_pad">
+      <geometry>
+        <mesh filename="meshes/spyder/foot_pad.stl" scale="1 1 1" />
+      </geometry>
+      <material name="rl_foot_pad_color">
+        <color rgba="0.19 0.22 0.26 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="rl_foot_pad_attachment" type="fixed">
+    <parent link="rl_tibia" />
+    <child link="rl_foot_pad_visual" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <joint name="rl_mount" type="fixed">
+    <parent link="body" />
+    <child link="rl_base" />
+    <origin xyz="-0.0669044354 -0.1243580382 0.0297987" rpy="0 0 -2.35619449" />
+  </joint>
+  <joint name="rl_coxa_yaw" type="revolute">
+    <parent link="rl_base" />
+    <child link="rl_coxa" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit lower="-0.9599310886" upper="0.9599310886" effort="0.9" velocity="5.2" />
+    <dynamics damping="0.01" friction="0" />
+  </joint>
+  <joint name="rl_femur_pitch" type="revolute">
+    <parent link="rl_coxa" />
+    <child link="rl_femur" />
+    <origin xyz="0.04396450385 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.396263402" upper="1.396263402" effort="0.9" velocity="5.2" />
+    <dynamics damping="0.01" friction="0" />
+  </joint>
+  <joint name="rl_tibia_pitch" type="revolute">
+    <parent link="rl_femur" />
+    <child link="rl_tibia" />
+    <origin xyz="0.07596114773 0 0.0004094305038" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.570796327" upper="0.872664626" effort="0.9" velocity="5.2" />
+    <dynamics damping="0.01" friction="0" />
+  </joint>
+  <link name="rl_foot_tip">
+    <inertial>
+      <mass value="0.001" />
+      <inertia ixx="1e-7" iyy="1e-7" izz="1e-7" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <collision name="rl_foot_contact">
+      <origin xyz="0 0 0.006" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.006" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="rl_foot_tip_fixed" type="fixed">
+    <parent link="rl_tibia" />
+    <child link="rl_foot_tip" />
+    <origin xyz="-0.0003198520962 0.003362061524 -0.1611647955" rpy="0 0 0" />
+  </joint>
+</robot>

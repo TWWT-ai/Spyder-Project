@@ -169,3 +169,63 @@ class LegKinematics:
             f"No IK solution found within joint limits; closest residual {best_error * 1000:.3f} mm "
             f"(tolerance {tolerance * 1000:.3f} mm)"
         )
+
+
+class SpyderLeg(LegKinematics):
+    """One Spyder leg, with the closed-form coxa-femur-tibia IK.
+
+    Lengths and offsets are read from the URDF, so they follow the CAD. Angles
+    are zero in the exported pose; a positive hip angle lowers the foot.
+    """
+
+    def __init__(self, urdf, name):
+        super().__init__(urdf, f"{name}_foot_tip")
+        origins = {joint.name[len(name) + 1:]: joint.origin for joint in self.chain}
+        self.mount = origins["mount"]
+        self.coxa_length = origins["femur_pitch"][0, 3]
+        femur_x, femur_z = origins["tibia_pitch"][[0, 2], 3]
+        tibia_x, self.lateral, tibia_z = origins["foot_tip_fixed"][:3, 3]
+        self.femur_length = float(np.hypot(femur_x, femur_z))
+        self.tibia_length = float(np.hypot(tibia_x, tibia_z))
+        self.femur_angle = float(np.arctan2(femur_z, femur_x))
+        self.tibia_angle = float(np.arctan2(tibia_z, tibia_x))
+
+    def _solve(self, target, knee_sign, reach_sign):
+        # Yaw: atan2 of the target, corrected for the foot's sideways offset.
+        x, y, z = (np.linalg.inv(self.mount) @ np.r_[target, 1])[:3]
+        reach_sq = x * x + y * y - self.lateral ** 2
+        if reach_sq <= 0:
+            raise ValueError("Foot target is inside the yaw axis offset")
+        reach = reach_sign * float(np.sqrt(reach_sq))
+        yaw = np.arctan2(y, x) - np.arctan2(self.lateral, reach)
+        # Pitch: two-link triangle in the leg plane, starting from the hip axis.
+        planar_x = reach - self.coxa_length
+        cosine = (planar_x ** 2 + z ** 2 - self.femur_length ** 2 - self.tibia_length ** 2) / (
+            2 * self.femur_length * self.tibia_length)
+        if abs(cosine) > 1:
+            raise ValueError("Foot target is further than the femur and tibia can reach")
+        bend = knee_sign * np.arccos(cosine)
+        femur_direction = np.arctan2(z, planar_x) - np.arctan2(
+            self.tibia_length * np.sin(bend), self.femur_length + self.tibia_length * np.cos(bend))
+        angles = np.array([yaw, self.femur_angle - femur_direction, self.tibia_angle - self.femur_angle - bend])
+        return (angles + np.pi) % (2 * np.pi) - np.pi
+
+    def inverse(self, target):
+        """Solve a body-frame foot position, or raise ValueError if no solution fits the limits.
+
+        Tries the knee branches with the foot ahead of the yaw axis, then behind it.
+        """
+        target = np.asarray(target, dtype=float)
+        if target.shape != (3,) or not np.all(np.isfinite(target)):
+            raise ValueError("Target must contain three finite coordinates in metres")
+        rejected = []
+        for reach_sign, knee_sign in ((1, -1), (1, 1), (-1, -1), (-1, 1)):
+            try:
+                angles = self._solve(target, knee_sign, reach_sign)
+            except ValueError as error:
+                rejected.append(str(error))
+                continue
+            if np.all(angles >= self.lower - 1e-9) and np.all(angles <= self.upper + 1e-9):
+                return np.clip(angles, self.lower, self.upper)
+            rejected.append(np.round(np.degrees(angles), 1).tolist())
+        raise ValueError(f"No solution within the joint limits; rejected (degrees): {rejected}")

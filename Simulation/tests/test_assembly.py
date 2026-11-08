@@ -24,7 +24,7 @@ class AssemblyTests(unittest.TestCase):
 
     def test_every_source_used_without_modification(self):
         original = {p.relative_to(ROOT).as_posix() for p in (ROOT/'meshes').rglob('*.stl')
-                    if 'assembled' not in p.parts}
+                    if 'assembled' not in p.parts and 'spyder' not in p.parts}
         self.assertEqual(original, set(self.report['sources']))
         for source, expected in self.report['sources'].items():
             self.assertEqual(hashlib.sha256((ROOT/source).read_bytes()).hexdigest(), expected)

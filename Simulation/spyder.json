@@ -1,0 +1,403 @@
+{
+  "source": "../Spyder parts/main.stl",
+  "notes": [
+    "Bounding boxes are millimetres in each leg frame: origin on the yaw axis at hip-axis height, X out along the leg, Z up.",
+    "Zero joint angles are the pose exported in main.stl: femurs level, tibias vertical.",
+    "+Y is taken as the front of the robot and +X as its right. main.stl does not say which end is the front.",
+    "Masses are estimates. Printed parts use printed_density_kg_m3 on CAD volume; battery and controller are not in main.stl, so electronics_kg is 0 until they are known.",
+    "Servo values are nominal MG996R figures. The servo identity is not confirmed.",
+    "Joint limits come from sweeping the real part meshes one joint at a time: past these angles a plate hits the yaw servo, a leg cover hits the coupling, or the foot hits a leg cover. They ignore the cradle overlap of up to 1.6 mm, which main.stl already has in its home pose because the cradle reliefs are not cut."
+  ],
+  "body_color": [
+    0.55,
+    0.58,
+    0.62,
+    1
+  ],
+  "servo_size_mm": [
+    54.5,
+    20.0,
+    46.2
+  ],
+  "hip_height_mm": 29.7987,
+  "match_tolerance_mm": 0.05,
+  "small_shell_max_mm": 6,
+  "small_shells_per_servo": 26,
+  "body_shell_count": 6,
+  "leg_congruence_tolerance_mm": 0.01,
+  "mass": {
+    "servo_kg": 0.055,
+    "printed_density_kg_m3": 700,
+    "electronics_kg": 0,
+    "electronics_centre_mm": [
+      0,
+      0,
+      30
+    ]
+  },
+  "servo": {
+    "torque_nm": 0.9,
+    "speed_rad_s": 5.2,
+    "damping": 0.01,
+    "friction": 0
+  },
+  "joint_limits_deg": {
+    "coxa_yaw": [
+      -55,
+      55
+    ],
+    "femur_pitch": [
+      -80,
+      80
+    ],
+    "tibia_pitch": [
+      -90,
+      50
+    ]
+  },
+  "legs": [
+    {
+      "name": "fr",
+      "label": "front right",
+      "heading_deg": 45
+    },
+    {
+      "name": "mr",
+      "label": "middle right",
+      "heading_deg": 0
+    },
+    {
+      "name": "rr",
+      "label": "rear right",
+      "heading_deg": -45
+    },
+    {
+      "name": "fl",
+      "label": "front left",
+      "heading_deg": 135
+    },
+    {
+      "name": "ml",
+      "label": "middle left",
+      "heading_deg": 180
+    },
+    {
+      "name": "rl",
+      "label": "rear left",
+      "heading_deg": -135
+    }
+  ],
+  "groups": {
+    "thigh_servo": {
+      "link": "base",
+      "color": [
+        0.19,
+        0.22,
+        0.26,
+        1
+      ]
+    },
+    "thigh_cradle": {
+      "link": "base",
+      "color": [
+        0.05,
+        0.43,
+        0.46,
+        1
+      ]
+    },
+    "thigh_cover": {
+      "link": "base",
+      "color": [
+        0.12,
+        0.78,
+        0.83,
+        1
+      ]
+    },
+    "coupling": {
+      "link": "coxa",
+      "color": [
+        0.18,
+        0.42,
+        0.72,
+        1
+      ]
+    },
+    "leg_servos": {
+      "link": "femur",
+      "color": [
+        0.19,
+        0.22,
+        0.26,
+        1
+      ]
+    },
+    "leg_cradle": {
+      "link": "femur",
+      "color": [
+        0.05,
+        0.43,
+        0.46,
+        1
+      ]
+    },
+    "leg_cover": {
+      "link": "femur",
+      "color": [
+        0.12,
+        0.78,
+        0.83,
+        1
+      ]
+    },
+    "foot": {
+      "link": "tibia",
+      "color": [
+        0.92,
+        0.48,
+        0.12,
+        1
+      ]
+    },
+    "foot_pad": {
+      "link": "tibia",
+      "color": [
+        0.19,
+        0.22,
+        0.26,
+        1
+      ]
+    }
+  },
+  "leg_parts": [
+    {
+      "name": "thigh_servo",
+      "group": "thigh_servo",
+      "low_mm": [
+        -38.0,
+        -10.007,
+        -18.456
+      ],
+      "high_mm": [
+        16.5,
+        9.993,
+        27.744
+      ],
+      "servo": true
+    },
+    {
+      "name": "thigh_cradle",
+      "group": "thigh_cradle",
+      "low_mm": [
+        -44.373,
+        -17.355,
+        -24.549
+      ],
+      "high_mm": [
+        17.143,
+        17.645,
+        7.451
+      ]
+    },
+    {
+      "name": "thigh_cover",
+      "group": "thigh_cover",
+      "low_mm": [
+        -43.338,
+        -17.345,
+        12.449
+      ],
+      "high_mm": [
+        17.462,
+        17.692,
+        24.449
+      ]
+    },
+    {
+      "name": "joint_cross",
+      "group": "coupling",
+      "low_mm": [
+        19.312,
+        -29.935,
+        -29.941
+      ],
+      "high_mm": [
+        24.653,
+        29.92,
+        29.914
+      ]
+    },
+    {
+      "name": "yaw_top",
+      "group": "coupling",
+      "low_mm": [
+        -22.219,
+        -11.705,
+        19.83
+      ],
+      "high_mm": [
+        29.473,
+        11.695,
+        29.19
+      ]
+    },
+    {
+      "name": "yaw_bottom",
+      "group": "coupling",
+      "low_mm": [
+        -12.315,
+        -11.633,
+        -29.21
+      ],
+      "high_mm": [
+        29.473,
+        11.623,
+        -19.907
+      ]
+    },
+    {
+      "name": "pitch_top",
+      "group": "coupling",
+      "low_mm": [
+        14.493,
+        19.835,
+        -11.71
+      ],
+      "high_mm": [
+        66.186,
+        29.195,
+        11.69
+      ]
+    },
+    {
+      "name": "pitch_bottom",
+      "group": "coupling",
+      "low_mm": [
+        14.493,
+        -29.205,
+        -11.638
+      ],
+      "high_mm": [
+        56.281,
+        -19.903,
+        11.618
+      ]
+    },
+    {
+      "name": "hip_servo",
+      "group": "leg_servos",
+      "low_mm": [
+        27.464,
+        -18.48,
+        -10.007
+      ],
+      "high_mm": [
+        81.964,
+        27.72,
+        9.993
+      ],
+      "servo": true
+    },
+    {
+      "name": "knee_servo",
+      "group": "leg_servos",
+      "low_mm": [
+        81.926,
+        -18.48,
+        -9.583
+      ],
+      "high_mm": [
+        136.426,
+        27.72,
+        10.417
+      ],
+      "servo": true
+    },
+    {
+      "name": "leg_cradle",
+      "group": "leg_cradle",
+      "low_mm": [
+        25.658,
+        -24.54,
+        -17.294
+      ],
+      "high_mm": [
+        138.228,
+        7.46,
+        17.706
+      ]
+    },
+    {
+      "name": "leg_cover",
+      "group": "leg_cover",
+      "low_mm": [
+        24.587,
+        8.046,
+        -17.42
+      ],
+      "high_mm": [
+        138.283,
+        17.046,
+        17.568
+      ]
+    },
+    {
+      "name": "foot_ground",
+      "group": "foot",
+      "low_mm": [
+        113.806,
+        -29.697,
+        -160.198
+      ],
+      "high_mm": [
+        122.942,
+        30.436,
+        -34.81
+      ]
+    },
+    {
+      "name": "foot_top",
+      "group": "foot",
+      "low_mm": [
+        104.043,
+        24.49,
+        -107.392
+      ],
+      "high_mm": [
+        134.035,
+        30.492,
+        24.908
+      ]
+    },
+    {
+      "name": "foot_bottom",
+      "group": "foot",
+      "low_mm": [
+        104.007,
+        -30.5,
+        -107.717
+      ],
+      "high_mm": [
+        135.85,
+        -24.5,
+        14.806
+      ]
+    },
+    {
+      "name": "foot_tip",
+      "group": "foot_pad",
+      "low_mm": [
+        110.259,
+        -3.225,
+        -160.755
+      ],
+      "high_mm": [
+        128.953,
+        9.95,
+        -148.755
+      ]
+    }
+  ],
+  "foot_contact_radius_mm": 6
+}

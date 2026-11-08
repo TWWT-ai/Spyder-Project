@@ -1,0 +1,99 @@
+{
+  "units": "metres, kilograms",
+  "source": "../Spyder parts/main.stl",
+  "source_sha256": "2b863252dfa89252ffb011c786133175e64515ac04568fdc11ea5226728a5ff8",
+  "source_triangles": 968308,
+  "source_shells": 570,
+  "body_shells": 6,
+  "leg_congruence_mm": {
+    "thigh_servo": 0.0001,
+    "thigh_cradle": 0.0001,
+    "thigh_cover": 0.0001,
+    "coupling": 0.0001,
+    "leg_servos": 0.0001,
+    "leg_cradle": 0.0001,
+    "leg_cover": 0.0001,
+    "foot": 0.0001,
+    "foot_pad": 0.0001
+  },
+  "lengths_mm": {
+    "yaw_to_hip": 43.964503845505774,
+    "hip_to_knee": 75.96114773435808,
+    "knee_above_hip": 0.40943050384521484
+  },
+  "foot_tip_in_tibia_mm": [
+    -0.3199,
+    3.3621,
+    -161.1648
+  ],
+  "mass_kg": {
+    "total": 1.6317,
+    "body": 0.1287,
+    "base": 0.0693,
+    "coxa": 0.0157,
+    "femur": 0.136,
+    "tibia": 0.0294
+  },
+  "legs": [
+    {
+      "name": "fr",
+      "label": "front right",
+      "heading_deg": 45,
+      "mount_in_body_mm": [
+        66.9044,
+        124.358,
+        29.7987
+      ]
+    },
+    {
+      "name": "mr",
+      "label": "middle right",
+      "heading_deg": 0,
+      "mount_in_body_mm": [
+        90.9967,
+        -0.2096,
+        29.7987
+      ]
+    },
+    {
+      "name": "rr",
+      "label": "rear right",
+      "heading_deg": -45,
+      "mount_in_body_mm": [
+        66.448,
+        -124.4944,
+        29.7987
+      ]
+    },
+    {
+      "name": "fl",
+      "label": "front left",
+      "heading_deg": 135,
+      "mount_in_body_mm": [
+        -66.448,
+        124.4944,
+        29.7987
+      ]
+    },
+    {
+      "name": "ml",
+      "label": "middle left",
+      "heading_deg": 180,
+      "mount_in_body_mm": [
+        -90.9967,
+        0.2096,
+        29.7987
+      ]
+    },
+    {
+      "name": "rl",
+      "label": "rear left",
+      "heading_deg": -135,
+      "mount_in_body_mm": [
+        -66.9044,
+        -124.358,
+        29.7987
+      ]
+    }
+  ]
+}
