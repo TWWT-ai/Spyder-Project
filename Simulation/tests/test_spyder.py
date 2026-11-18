@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 import sys
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 import pybullet as p
@@ -68,6 +69,85 @@ class ModelTests(unittest.TestCase):
     def test_home_pose_has_no_overlapping_neighbours(self):
         self.assertEqual(self.robot.touching_legs(), [])
 
+    def test_six_seven_targets_alternate_the_front_legs_within_limits(self):
+        dance = sim.SixSevenDance(self.robot)
+        self.assertTrue(all(angle == 0 for angle in dance.targets(0).values()))
+        first_step = dance.targets(dance.STEP_SECONDS / 2)
+        second_step = dance.targets(dance.step_start['ml'] + dance.STEP_SECONDS / 2)
+        for moving, planted, targets in (('mr', 'ml', first_step), ('ml', 'mr', second_step)):
+            angles = [targets[f'{moving}_{joint}'] for joint in sim.JOINTS]
+            self.assertGreater(self.robot.legs[moving].forward(angles)[2], dance.middle_home[moving][2] + 0.03)
+            if planted == 'ml':
+                self.assertTrue(all(targets[f'ml_{joint}'] == 0 for joint in sim.JOINTS))
+            else:
+                planted_angles = [targets[f'{planted}_{joint}'] for joint in sim.JOINTS]
+                self.assertGreater(self.robot.legs[planted].forward(planted_angles)[1], 0.14)
+            self.assertTrue(all(targets[f'{leg}_{joint}'] == 0 for leg in ('fr', 'fl') for joint in sim.JOINTS))
+        self.assertTrue(all(dance.targets(dance.front_start)[f'{leg}_{joint}'] == 0
+                            for leg in ('fr', 'fl') for joint in sim.JOINTS))
+        first = dance.targets(dance.gesture_start + 0.3)
+        second = dance.targets(dance.gesture_start + 0.9)
+        self.robot.check(first)
+        self.robot.check(second)
+        for leg in ('mr', 'ml'):
+            angles = [first[f'{leg}_{joint}'] for joint in sim.JOINTS]
+            self.assertGreater(self.robot.legs[leg].forward(angles)[1], 0.14)
+        self.assertGreater(first['fr_femur_pitch'], first['fl_femur_pitch'])
+        self.assertLess(second['fr_femur_pitch'], second['fl_femur_pitch'])
+        for targets in (first, second):
+            self.robot.pose(targets)
+            self.assertLess(np.linalg.norm(self.robot.foot_world('fr') - self.robot.foot_world('fl')), 0.20)
+            self.assertEqual(self.robot.touching_legs(), [])
+            for leg in ('fr', 'fl'):
+                knee_z = p.getLinkState(self.robot.id, self.robot.links[f'{leg}_tibia'],
+                                        computeForwardKinematics=True)[4][2]
+                self.assertGreater(self.robot.foot_world(leg)[2] - knee_z, 0.05)
+
+    def test_front_emotes_keep_the_other_five_legs_planted(self):
+        for motion in ('hello', 'point'):
+            with self.subTest(motion=motion):
+                targets = sim.FrontEmote(self.robot, motion).targets(1.2)
+                self.robot.check(targets)
+                self.assertTrue(all(targets[f'{leg}_{joint}'] == 0
+                                    for leg in sim.LEGS if leg != 'fr' for joint in sim.JOINTS))
+                self.robot.pose(targets)
+                self.assertGreater(self.robot.foot_world('fr')[2],
+                                   self.robot.legs['fr'].forward(np.zeros(3))[2] + 0.04)
+                self.assertEqual(self.robot.touching_legs(), [])
+
+    def test_foot_taps_lift_one_leg_in_front_to_rear_order(self):
+        wave = sim.FootTapWave(self.robot)
+        for index, moving in enumerate(wave.ORDER):
+            with self.subTest(leg=moving):
+                targets = wave.targets((index + 0.5) * wave.SECONDS_PER_TAP)
+                self.robot.check(targets)
+                self.assertTrue(all(targets[f'{leg}_{joint}'] == 0
+                                    for leg in sim.LEGS if leg != moving for joint in sim.JOINTS))
+                angles = [targets[f'{moving}_{joint}'] for joint in sim.JOINTS]
+                self.assertGreater(self.robot.legs[moving].forward(angles)[2], wave.home[moving][2] + 0.035)
+
+    def test_four_leg_emotes_step_middle_feet_before_lifting_front_pair(self):
+        for motion in ('v', 'claws'):
+            with self.subTest(motion=motion):
+                dance = sim.SixSevenDance(self.robot, front_motion=motion)
+                stepping = dance.targets(dance.step_start['ml'] + dance.STEP_SECONDS / 2)
+                self.assertTrue(all(stepping[f'{leg}_{joint}'] == 0
+                                    for leg in ('fr', 'fl') for joint in sim.JOINTS))
+                final = dance.targets(dance.gesture_start + 0.3)
+                self.robot.check(final)
+                self.robot.pose(final)
+                self.assertEqual(self.robot.touching_legs(), [])
+                for leg in ('fr', 'fl'):
+                    self.assertGreater(self.robot.foot_world(leg)[2], 0.04)
+
+    def test_wiggle_and_crab_motion_start_from_home(self):
+        self.assertLess(max(abs(angle) for angle in sim.WiggleDance(self.robot).targets(0).values()), 1e-10)
+        self.assertLess(max(abs(angle) for angle in sim.CrabDance(self.robot).targets(0).values()), 1e-10)
+        gait = sim.TripodGait(self.robot)
+        sideways = gait.targets(0.6, lateral=0.04)
+        self.robot.check(sideways)
+        self.assertTrue(any(abs(sideways[f'{leg}_coxa_yaw']) > 0.01 for leg in sim.LEGS))
+
 
 class InverseKinematicsTests(unittest.TestCase):
     def test_round_trip_for_every_leg(self):
@@ -84,6 +164,15 @@ class InverseKinematicsTests(unittest.TestCase):
         for target in (home + [1, 1, 0], [0, 0, float('nan')], [0, 0]):
             with self.subTest(target=target), self.assertRaises(ValueError):
                 model.inverse(target)
+
+
+class CommandLineTests(unittest.TestCase):
+    def test_each_new_flag_selects_its_motion(self):
+        for mode in ('wiggle', 'hello', 'point', 'v-sign', 'foot-tap-wave', 'crab-walk', 'crab-dance'):
+            with self.subTest(mode=mode), patch.object(sys, 'argv', ['simulate_spyder.py', '--' + mode]), \
+                    patch.object(sim, 'run') as run:
+                sim.main()
+                self.assertEqual(run.call_args.kwargs['mode'], mode)
 
 
 class SourceTests(unittest.TestCase):
@@ -110,6 +199,117 @@ class SourceTests(unittest.TestCase):
 
 
 class PhysicsTests(unittest.TestCase):
+    def test_new_moves_keep_the_expected_support_under_gravity(self):
+        motions = (
+            ('wiggle', 3.5, 6, sim.WiggleDance),
+            ('hello', 2.0, 5, lambda robot: sim.FrontEmote(robot, 'hello')),
+            ('point', 2.0, 5, lambda robot: sim.FrontEmote(robot, 'point')),
+            ('v-sign', 6.0, 4, lambda robot: sim.SixSevenDance(robot, front_motion='v')),
+            ('foot-tap-wave', 4.5, 5, sim.FootTapWave),
+            ('crab-walk', 4.0, 3, lambda robot: sim.TripodGait(robot, swing_fraction=0.42, lift_exponent=2)),
+            ('crab-dance', 10.0, 3, sim.CrabDance),
+        )
+        for mode, seconds, support, make_motion in motions:
+            with self.subTest(mode=mode):
+                ground = sim.connect(True, True)
+                try:
+                    robot = sim.Spyder(ground=ground)
+                    home = {name: 0.0 for name in robot.joints}
+                    for _ in range(int(0.5 / sim.TIME_STEP)):
+                        robot.command(home)
+                        p.stepSimulation()
+                    motion = make_motion(robot)
+                    minimum = len(sim.LEGS)
+                    wiggle_positions, wiggle_yaws = [], []
+                    resting_height = sim.body_state(robot)[0][2]
+                    foot_links = {robot.links[f'{leg}_foot_tip'] for leg in sim.LEGS}
+                    for step in range(int(seconds / sim.TIME_STEP)):
+                        time_s = step * sim.TIME_STEP
+                        targets = motion.targets(time_s, lateral=0.04) if mode == 'crab-walk' else motion.targets(time_s)
+                        robot.command(targets)
+                        p.stepSimulation()
+                        contacts = {leg for leg in sim.LEGS
+                                    if p.getContactPoints(robot.id, ground, robot.links[f'{leg}_foot_tip'], -1)}
+                        minimum = min(minimum, len(contacts))
+                        if mode == 'wiggle':
+                            body_position, _, _, body_yaw = sim.body_state(robot)
+                            wiggle_positions.append(body_position)
+                            wiggle_yaws.append(body_yaw)
+                            self.assertTrue(all(contact[3] in foot_links
+                                                for contact in p.getContactPoints(robot.id, ground)))
+                    position, roll, pitch, _ = sim.body_state(robot)
+                    self.assertGreaterEqual(minimum, support)
+                    self.assertGreater(position[2], 0.1)
+                    self.assertLess(max(abs(roll), abs(pitch)), 5)
+                    self.assertEqual(robot.touching_legs(), [])
+                    if mode == 'wiggle':
+                        travel = np.ptp(wiggle_positions, axis=0)
+                        self.assertGreater(travel[0], 0.040)
+                        self.assertGreater(travel[2], 0.032)
+                        self.assertGreater(np.ptp(wiggle_yaws), 3)
+                        def at(time_s):
+                            return wiggle_positions[round(time_s / sim.TIME_STEP)]
+
+                        entry, period = motion.ENTRY_SECONDS, motion.PERIOD_SECONDS
+                        right = at(entry)
+                        first_bottom = at(entry + period / 4)
+                        left = at(entry + period / 2)
+                        second_bottom = at(entry + 3 * period / 4)
+                        right_again = at(entry + period)
+                        centre_x = wiggle_positions[0][0]
+                        self.assertGreater(right[0] - centre_x, 0.018)
+                        self.assertLess(left[0] - centre_x, -0.018)
+                        for edge in (right, left, right_again):
+                            self.assertAlmostEqual(edge[2], resting_height, delta=0.003)
+                        for bottom in (first_bottom, second_bottom):
+                            self.assertAlmostEqual(bottom[0], centre_x, delta=0.005)
+                            self.assertLess(bottom[2], resting_height - 0.030)
+                        self.assertLess(max(point[2] for point in wiggle_positions), resting_height + 0.002)
+                        self.assertAlmostEqual(right_again[0], right[0], delta=0.003)
+                    if mode in ('v-sign', 'crab-dance'):
+                        self.assertEqual(contacts, {'mr', 'ml', 'rr', 'rl'})
+                finally:
+                    p.disconnect()
+
+    def test_six_seven_stands_on_four_legs_with_front_legs_raised(self):
+        summary = sim.run(mode='67', direct=True, seconds=6)
+        self.assertEqual(set(summary['grounded_legs']), {'mr', 'ml', 'rr', 'rl'})
+        self.assertLess(summary['max_tilt_deg'], 5)
+        self.assertGreater(summary['lowest_body_z'], 0.1)
+        self.assertLess(np.linalg.norm((summary['body_end'] - summary['body_start'])[:2]), 0.02)
+        self.assertEqual(summary['touching'], [])
+
+    def test_six_seven_steps_middle_feet_forward_without_sliding_body(self):
+        ground = sim.connect(True, True)
+        self.addCleanup(p.disconnect)
+        robot = sim.Spyder(ground=ground)
+        dance = sim.SixSevenDance(robot)
+        home = {name: 0.0 for name in robot.joints}
+        for _ in range(int(0.5 / sim.TIME_STEP)):
+            robot.command(home)
+            p.stepSimulation()
+        start = np.array(robot.body_pose()[0])
+        samples = {}
+        foot_heights = {}
+        min_contacts = len(sim.LEGS)
+        for step in range(int(dance.front_start / sim.TIME_STEP)):
+            time_s = step * sim.TIME_STEP
+            robot.command(dance.targets(time_s))
+            p.stepSimulation()
+            contacts = {leg for leg in sim.LEGS
+                        if p.getContactPoints(robot.id, ground, robot.links[f'{leg}_foot_tip'], -1)}
+            min_contacts = min(min_contacts, len(contacts))
+            for key, sample_time in (('first', dance.STEP_SECONDS / 2),
+                                     ('second', dance.step_start['ml'] + dance.STEP_SECONDS / 2)):
+                if abs(time_s - sample_time) < sim.TIME_STEP / 2:
+                    samples[key] = contacts
+                    foot_heights[key] = robot.foot_world('mr' if key == 'first' else 'ml')[2]
+        self.assertEqual(samples['first'], set(sim.LEGS) - {'mr'})
+        self.assertEqual(samples['second'], set(sim.LEGS) - {'ml'})
+        self.assertGreater(min(foot_heights.values()), 0.025)
+        self.assertGreaterEqual(min_contacts, 4)
+        self.assertLess(np.linalg.norm((np.array(robot.body_pose()[0]) - start)[:2]), 0.02)
+
     def test_stands_with_the_weight_shared_across_six_feet(self):
         ground = sim.connect(True, True)
         self.addCleanup(p.disconnect)

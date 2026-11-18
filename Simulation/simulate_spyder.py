@@ -4,6 +4,14 @@ Run from this folder:
   python simulate_spyder.py                 sliders for all 18 joints, body held in the air
   python simulate_spyder.py --physics       same sliders, free robot on the ground with gravity
   python simulate_spyder.py --walk          tripod gait with speed and turn sliders
+  python simulate_spyder.py --67            stand on four legs and dance with the front two
+  python simulate_spyder.py --wiggle        sway and bob with all six feet planted
+  python simulate_spyder.py --hello         wave one raised front leg
+  python simulate_spyder.py --point         point one raised front leg
+  python simulate_spyder.py --v-sign        raise both front legs in a V
+  python simulate_spyder.py --foot-tap-wave tap each foot in sequence
+  python simulate_spyder.py --crab-walk     walk sideways on alternating tripods
+  python simulate_spyder.py --crab-dance    side-step, then wave both front claws
   python simulate_spyder.py --demo          moves each joint in turn
 Add --direct to run without a window, and --seconds to stop after a set time.
 
@@ -130,29 +138,195 @@ class Spyder:
 class TripodGait:
     """Lift, swing and stance foot paths for two alternating groups of three legs."""
 
-    def __init__(self, spyder, period=1.2, lift=0.03):
+    def __init__(self, spyder, period=1.2, lift=0.03, swing_fraction=0.5, lift_exponent=1):
         self.spyder = spyder
         self.period = period
         self.lift = lift
+        self.swing_fraction = swing_fraction
+        self.lift_exponent = lift_exponent
         self.home = {leg: model.forward(np.zeros(3)) for leg, model in spyder.legs.items()}
 
-    def targets(self, time_s, forward=0.0, turn=0.0):
-        """Joint targets at a time, for a speed along +Y (m/s) and a turn rate about +Z (rad/s)."""
+    def targets(self, time_s, forward=0.0, turn=0.0, lateral=0.0):
+        """Joint targets for +Y forward, +X lateral (m/s), and +Z turn (rad/s)."""
         result = {}
         for group, legs in enumerate(TRIPODS):
             phase = (time_s / self.period + group / 2) % 1.0
             for leg in legs:
                 home = self.home[leg]
-                # A planted foot covers this much ground, relative to the body, in half a cycle.
-                stride = (np.array([0.0, forward, 0.0]) + turn * np.array([-home[1], home[0], 0.0])) * self.period / 2
+                # A planted foot covers this much ground, relative to the body, per stride.
+                stride = (np.array([lateral, forward, 0.0])
+                          + turn * np.array([-home[1], home[0], 0.0])) * self.period / 2
                 stride *= min(1.0, time_s / self.period)  # Grow the stride from standing still.
-                if phase < 0.5:
-                    along, height = 0.5 - 2 * phase, 0.0
+                stance_fraction = 1 - self.swing_fraction
+                if phase < stance_fraction:
+                    along, height = 0.5 - phase / stance_fraction, 0.0
                 else:
-                    swing = (phase - 0.5) * 2
-                    along, height = -0.5 * math.cos(math.pi * swing), self.lift * math.sin(math.pi * swing)
+                    swing = (phase - stance_fraction) / self.swing_fraction
+                    along = -0.5 * math.cos(math.pi * swing)
+                    height = self.lift * math.sin(math.pi * swing) ** self.lift_exponent
                 result.update(self.spyder.foot_targets(leg, home + along * stride + np.array([0, 0, height])))
         return result
+
+
+class SixSevenDance:
+    """Step the middle feet forward, then raise the front pair for the gesture."""
+
+    STEP_SECONDS = 1.2
+    SETTLE_SECONDS = 0.25
+    STEP_HEIGHT = 0.04
+    FRONT_RAISE_SECONDS = 0.8
+
+    def __init__(self, spyder, front_motion="67"):
+        self.spyder = spyder
+        if front_motion not in ("67", "v", "claws"):
+            raise ValueError(f"Unknown front motion {front_motion!r}")
+        self.front_motion = front_motion
+        self.middle_home = {}
+        self.middle_goal = {}
+        for leg in ("mr", "ml"):
+            home = spyder.legs[leg].forward(np.zeros(3))
+            goal = home.copy()
+            goal[1] = 0.15  # Put the middle feet towards the front (+Y).
+            self.middle_home[leg], self.middle_goal[leg] = home, goal
+        self.step_start = {"mr": 0.0, "ml": self.STEP_SECONDS + self.SETTLE_SECONDS}
+        self.front_start = 2 * (self.STEP_SECONDS + self.SETTLE_SECONDS)
+        self.gesture_start = self.front_start + self.FRONT_RAISE_SECONDS
+
+    @staticmethod
+    def ease(progress):
+        progress = max(0.0, min(1.0, progress))
+        return progress * progress * (3 - 2 * progress)
+
+    def targets(self, time_s):
+        targets = {name: 0.0 for name in self.spyder.joints}
+        for leg in ("mr", "ml"):
+            phase = (time_s - self.step_start[leg]) / self.STEP_SECONDS
+            if phase <= 0:
+                continue
+            if phase < 0.2:
+                along, lift = 0.0, self.ease(phase / 0.2)
+            elif phase < 0.8:
+                along, lift = self.ease((phase - 0.2) / 0.6), 1.0
+            else:
+                along, lift = 1.0, 1.0 - self.ease((phase - 0.8) / 0.2)
+            foot = (self.middle_home[leg] + along * (self.middle_goal[leg] - self.middle_home[leg])
+                    + np.array([0.0, 0.0, self.STEP_HEIGHT * lift]))
+            targets.update(self.spyder.foot_targets(leg, foot))
+
+        # Only lift the front pair after both middle feet have landed and settled.
+        progress = self.ease((time_s - self.front_start) / self.FRONT_RAISE_SECONDS)
+        beat = math.sin(2 * math.pi * (time_s - self.gesture_start) / 1.2)
+        for leg in ("rr", "rl"):
+            # A small downward bias keeps both rear feet loaded on the ground.
+            targets[f"{leg}_femur_pitch"] = math.radians(progress)
+        for leg, direction in (("fr", 1), ("fl", -1)):
+            if self.front_motion == "67":
+                yaw, hip, knee = 45 * direction, -45 + 12 * direction * beat, -82 + 3 * direction * beat
+            elif self.front_motion == "v":
+                yaw, hip, knee = -15 * direction, -45, -82
+            else:
+                yaw, hip, knee = direction * (35 + 10 * beat), -45 + 8 * beat, -82 + 3 * beat
+            targets[f"{leg}_coxa_yaw"] = math.radians(yaw * progress)
+            targets[f"{leg}_femur_pitch"] = math.radians(hip * progress)
+            targets[f"{leg}_tibia_pitch"] = math.radians(knee * progress)
+        return targets
+
+
+class WiggleDance:
+    """Trace the same low U-shaped arc in both directions with planted feet."""
+
+    ENTRY_SECONDS = 0.8
+    PERIOD_SECONDS = 2.6
+    SWAY_METRES = 0.022
+    DIP_METRES = 0.035
+    YAW_DEGREES = 2
+
+    def __init__(self, spyder):
+        self.spyder = spyder
+        self.home = {leg: model.forward(np.zeros(3)) for leg, model in spyder.legs.items()}
+
+    def targets(self, time_s):
+        if time_s < self.ENTRY_SECONDS:
+            # Ease from the home pose to one end of the U without lifting the body.
+            progress = SixSevenDance.ease(time_s / self.ENTRY_SECONDS)
+            sway, dip, yaw = self.SWAY_METRES * progress, 0.0, 0.0
+        else:
+            phase = 2 * math.pi * (time_s - self.ENTRY_SECONDS) / self.PERIOD_SECONDS
+            # sin² makes the centre the bottom on both passes. The return retraces
+            # the same arc instead of travelling above it to close a loop.
+            sway = self.SWAY_METRES * math.cos(phase)
+            dip = -self.DIP_METRES * math.sin(phase) ** 2
+            yaw = math.radians(self.YAW_DEGREES) * math.sin(phase) ** 3
+        offset = np.array([sway, 0.0, dip])
+        rotation = np.array([[math.cos(yaw), -math.sin(yaw), 0],
+                             [math.sin(yaw), math.cos(yaw), 0], [0, 0, 1]])
+        targets = {}
+        for leg, home in self.home.items():
+            targets.update(self.spyder.foot_targets(leg, rotation.T @ (home - offset)))
+        return targets
+
+
+class FrontEmote:
+    """Lift one front leg for a wave or a held point; five feet stay home."""
+
+    def __init__(self, spyder, motion):
+        self.spyder = spyder
+        if motion not in ("hello", "point"):
+            raise ValueError(f"Unknown front emote {motion!r}")
+        self.motion = motion
+
+    def targets(self, time_s):
+        progress = SixSevenDance.ease(time_s / 0.8)
+        beat = math.sin(2 * math.pi * (time_s - 0.8) / 1.2)
+        targets = {name: 0.0 for name in self.spyder.joints}
+        if self.motion == "hello":
+            yaw, hip, knee = 30 + 10 * beat, -45 + 6 * beat, -82
+        else:
+            yaw, hip, knee = 45, -45, -70
+        for joint, angle in zip(JOINTS, (yaw, hip, knee)):
+            targets[f"fr_{joint}"] = math.radians(angle * progress)
+        return targets
+
+
+class FootTapWave:
+    """Tap one foot at a time from front to rear on alternating sides."""
+
+    ORDER = ("fr", "fl", "mr", "ml", "rr", "rl")
+    SECONDS_PER_TAP = 0.75
+
+    def __init__(self, spyder):
+        self.spyder = spyder
+        self.home = {leg: model.forward(np.zeros(3)) for leg, model in spyder.legs.items()}
+
+    def targets(self, time_s):
+        cycle = time_s % (len(self.ORDER) * self.SECONDS_PER_TAP)
+        index = int(cycle / self.SECONDS_PER_TAP)
+        phase = cycle / self.SECONDS_PER_TAP - index
+        foot = self.ORDER[index]
+        lift = 0.04 * math.sin(math.pi * phase) ** 2
+        targets = {name: 0.0 for name in self.spyder.joints}
+        targets.update(self.spyder.foot_targets(foot, self.home[foot] + np.array([0, 0, lift])))
+        return targets
+
+
+class CrabDance:
+    """Side-step in both directions, settle, then form a four-foot claw pose."""
+
+    SIDE_SECONDS = 4.8
+    SETTLE_SECONDS = 0.3
+
+    def __init__(self, spyder, speed=0.04):
+        self.gait = TripodGait(spyder, swing_fraction=0.42, lift_exponent=2)
+        self.claws = SixSevenDance(spyder, front_motion="claws")
+        self.speed = speed
+
+    def targets(self, time_s):
+        if time_s < self.SIDE_SECONDS:
+            sideways = self.speed * math.sin(2 * math.pi * time_s / self.SIDE_SECONDS)
+            return self.gait.targets(time_s, lateral=sideways)
+        if time_s < self.SIDE_SECONDS + self.SETTLE_SECONDS:
+            return {name: 0.0 for name in self.claws.spyder.joints}
+        return self.claws.targets(time_s - self.SIDE_SECONDS - self.SETTLE_SECONDS)
 
 
 def body_state(spyder):
@@ -192,11 +366,11 @@ def demo_targets(spyder, time_s, seconds_per_joint=2.5):
     return {name: (angle if name == active else 0.0) for name in names}, active
 
 
-def save_screenshot(path, target, distance=0.75):
+def save_screenshot(path, target, distance=0.75, yaw=35, pitch=-28):
     from PIL import Image
 
     width, height = 1280, 960
-    view = p.computeViewMatrixFromYawPitchRoll(list(target), distance, 35, -28, 0, 2)
+    view = p.computeViewMatrixFromYawPitchRoll(list(target), distance, yaw, pitch, 0, 2)
     projection = p.computeProjectionMatrixFOV(45, width / height, 0.01, 5)
     pixels = p.getCameraImage(width, height, view, projection, renderer=p.ER_TINY_RENDERER, shadow=1)[2]
     path = Path(path)
@@ -219,7 +393,8 @@ def parse_settings(settings):
 def run(*, mode="pose", direct=False, seconds=None, settings=None, screenshot=None, forward=0.04, turn=0.0):
     """Run a mode until the window closes or for a simulated time; return a summary."""
     if seconds is None and direct:
-        seconds = 2.0
+        seconds = {"67": 6.0, "v-sign": 6.0, "foot-tap-wave": 4.5,
+                   "crab-dance": 10.0}.get(mode, 2.0)
     held = mode in ("pose", "demo")
     ground = connect(direct, not held)
     summary = {}
@@ -237,10 +412,25 @@ def run(*, mode="pose", direct=False, seconds=None, settings=None, screenshot=No
         spyder.check(start)
         spyder.pose(start)
         home = {**{name: 0.0 for name in spyder.joints}, **start}
-        gait = TripodGait(spyder) if mode == "walk" else None
+        gait = (TripodGait(spyder) if mode == "walk" else
+                TripodGait(spyder, swing_fraction=0.42, lift_exponent=2) if mode == "crab-walk" else None)
+        motions = {
+            "67": lambda: SixSevenDance(spyder),
+            "wiggle": lambda: WiggleDance(spyder),
+            "hello": lambda: FrontEmote(spyder, "hello"),
+            "point": lambda: FrontEmote(spyder, "point"),
+            "v-sign": lambda: SixSevenDance(spyder, front_motion="v"),
+            "foot-tap-wave": lambda: FootTapWave(spyder),
+            "crab-dance": lambda: CrabDance(spyder, forward),
+        }
+        dance = motions[mode]() if mode in motions else None
         sliders, body_sliders, walk_sliders = {}, [], {}
+        front_view = mode in ("67", "wiggle", "hello", "point", "v-sign", "crab-dance")
+        camera_distance = 0.75 if mode == "wiggle" or not front_view else 1.0
+        camera_pitch = -15 if mode == "wiggle" else -28
         if not direct:
-            p.resetDebugVisualizerCamera(0.75, 35, -28, [0, 0, 0.1])
+            p.resetDebugVisualizerCamera(camera_distance, 180 if front_view else 35,
+                                         camera_pitch, [0, 0, 0.1])
             if mode in ("pose", "physics"):
                 sliders = add_joint_sliders(spyder, start)
             if mode == "pose":
@@ -248,8 +438,10 @@ def run(*, mode="pose", direct=False, seconds=None, settings=None, screenshot=No
                     ("body X (m)", -0.5, 0.5, 0), ("body Y (m)", -0.5, 0.5, 0), ("body Z (m)", 0.0, 0.6, HELD_HEIGHT),
                     ("body roll (deg)", -180, 180, 0), ("body pitch (deg)", -180, 180, 0),
                     ("body yaw (deg)", -180, 180, 0))]
-            if mode == "walk":
-                walk_sliders = {"forward": p.addUserDebugParameter("speed along +Y (mm/s)", -80, 80, forward * 1000),
+            if mode in ("walk", "crab-walk"):
+                walk_sliders = {"forward": p.addUserDebugParameter(
+                                    "speed along +Y (mm/s)" if mode == "walk" else "speed along +X (mm/s)",
+                                    -80, 80, forward * 1000),
                                 "turn": p.addUserDebugParameter("turn (deg/s)", -30, 30, math.degrees(turn))}
         if not held:
             for _ in range(int(0.5 / TIME_STEP)):  # Settle onto the feet before moving.
@@ -274,12 +466,17 @@ def run(*, mode="pose", direct=False, seconds=None, settings=None, screenshot=No
                     print("Moving", active)
             elif mode == "physics":
                 spyder.command(read_sliders(sliders) if sliders else home)
-            else:
+            elif dance is not None:
+                spyder.command(dance.targets(now))
+            elif gait is not None:
                 speed, rate = forward, turn
                 if walk_sliders:
                     speed = p.readUserDebugParameter(walk_sliders["forward"]) / 1000
                     rate = math.radians(p.readUserDebugParameter(walk_sliders["turn"]))
-                spyder.command(gait.targets(now, speed, rate))
+                spyder.command(gait.targets(now, forward=speed if mode == "walk" else 0.0,
+                                            turn=rate, lateral=speed if mode == "crab-walk" else 0.0))
+            else:
+                raise ValueError(f"Unknown mode {mode!r}")
             if held:
                 p.performCollisionDetection()
             else:
@@ -306,6 +503,8 @@ def run(*, mode="pose", direct=False, seconds=None, settings=None, screenshot=No
             summary = {"angles": spyder.angles(), "body_start": origin[0], "body_end": end[0],
                        "yaw_change_deg": end[3] - origin[3], "max_tilt_deg": tilt, "lowest_body_z": lowest,
                        "peak_torque_nm": peak_torque, "peak_joint": peak_joint,
+                       "grounded_legs": [leg for leg in LEGS if p.getContactPoints(spyder.id, ground,
+                                                                                     spyder.links[f"{leg}_foot_tip"], -1)],
                        "touching": spyder.touching_legs()}
             print(f"Body moved {np.round((end[0] - origin[0]) * 1000, 1).tolist()} mm, turned "
                   f"{summary['yaw_change_deg']:.1f} deg; max tilt {tilt:.2f} deg, lowest body height "
@@ -313,7 +512,9 @@ def run(*, mode="pose", direct=False, seconds=None, settings=None, screenshot=No
             if summary["touching"]:
                 print("Neighbouring legs overlap:", ", ".join(summary["touching"]))
             if screenshot:
-                save_screenshot(screenshot, [end[0][0], end[0][1], end[0][2] - 0.03])
+                save_screenshot(screenshot, [end[0][0], end[0][1], end[0][2] - 0.03],
+                                distance=camera_distance,
+                                yaw=180 if front_view else 35, pitch=camera_pitch)
         return summary
     except KeyboardInterrupt:
         return summary
@@ -332,12 +533,22 @@ def main():
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--physics", action="store_true", help="Free robot on the ground, motors follow the sliders")
     group.add_argument("--walk", action="store_true", help="Tripod gait under physics")
+    group.add_argument("--67", dest="six_seven", action="store_true",
+                       help="Balance on four legs while the front two do the 6-7 gesture")
+    group.add_argument("--wiggle", action="store_true", help="Sway, bob and yaw with six feet planted")
+    group.add_argument("--hello", action="store_true", help="Wave one raised front leg")
+    group.add_argument("--point", action="store_true", help="Point one raised front leg")
+    group.add_argument("--v-sign", action="store_true", help="Step onto four feet and raise the front pair in a V")
+    group.add_argument("--foot-tap-wave", action="store_true", help="Tap each leg from front to rear")
+    group.add_argument("--crab-walk", action="store_true", help="Walk sideways on alternating tripods")
+    group.add_argument("--crab-dance", action="store_true", help="Side-step, form a four-foot stance, and wave both claws")
     group.add_argument("--demo", action="store_true", help="Move each joint in turn")
     parser.add_argument("--direct", action="store_true", help="Run without a window")
     parser.add_argument("--seconds", type=float, help="Stop after this much simulated time")
     parser.add_argument("--set", action="append", default=[], metavar="JOINT=DEG",
                         help="Start a joint at an angle, e.g. --set fr_femur_pitch=20 (repeatable)")
-    parser.add_argument("--speed", type=float, default=40.0, help="Walking speed along +Y in mm/s (default 40)")
+    parser.add_argument("--speed", type=float, default=40.0,
+                        help="Walking speed in mm/s: +Y for --walk, +X for crab modes (default 40)")
     parser.add_argument("--turn", type=float, default=0.0, help="Walking turn rate in deg/s (default 0)")
     parser.add_argument("--screenshot", type=Path, help="Save a PNG of the final pose (implies --direct)")
     args = parser.parse_args()
@@ -347,7 +558,12 @@ def main():
         settings = parse_settings(args.set)
     except ValueError as error:
         parser.error(str(error))
-    mode = "physics" if args.physics else "walk" if args.walk else "demo" if args.demo else "pose"
+    mode = next((name for name, enabled in (
+        ("physics", args.physics), ("walk", args.walk), ("67", args.six_seven),
+        ("wiggle", args.wiggle), ("hello", args.hello), ("point", args.point),
+        ("v-sign", args.v_sign), ("foot-tap-wave", args.foot_tap_wave),
+        ("crab-walk", args.crab_walk), ("crab-dance", args.crab_dance),
+        ("demo", args.demo)) if enabled), "pose")
     direct = args.direct or args.screenshot is not None
     try:
         run(mode=mode, direct=direct, seconds=args.seconds, settings=settings, screenshot=args.screenshot,

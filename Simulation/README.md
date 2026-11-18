@@ -8,20 +8,44 @@ See it [walking](previews/spyder_walk.gif) or in its [exported home pose](previe
 
 ## Run it
 
-PyBullet is currently installed only in WSL on this computer, and the WSL commands below were the ones tested. From the `Simulation` folder in a WSL terminal, with `python3` being an interpreter that has `requirements.txt` installed:
+From the `Simulation` folder in PowerShell, use the local virtual environment (create it first with the setup commands in the single-leg section below if needed):
 
-```bash
-python3 simulate_spyder.py
+```powershell
+.\.venv\Scripts\python.exe simulate_spyder.py
+.\.venv\Scripts\python.exe simulate_spyder.py --67
+.\.venv\Scripts\python.exe simulate_spyder.py --wiggle
+.\.venv\Scripts\python.exe simulate_spyder.py --hello
+.\.venv\Scripts\python.exe simulate_spyder.py --point
+.\.venv\Scripts\python.exe simulate_spyder.py --v-sign
+.\.venv\Scripts\python.exe simulate_spyder.py --foot-tap-wave
+.\.venv\Scripts\python.exe simulate_spyder.py --crab-walk
+.\.venv\Scripts\python.exe simulate_spyder.py --crab-dance
 ```
+
+In WSL, use `python3 simulate_spyder.py` or `python3 simulate_spyder.py --67` with the dependencies in `requirements.txt` installed.
 
 | Command | What it does |
 |---|---|
 | `python3 simulate_spyder.py` | A slider for every joint, plus body position and rotation. Body held in the air, no gravity. |
 | `python3 simulate_spyder.py --physics` | The same joint sliders on a free robot standing on the ground under gravity. It can fall over. |
 | `python3 simulate_spyder.py --walk` | Tripod gait, with sliders for speed and turn rate. `--speed 60 --turn 10` sets the starting values (mm/s, deg/s). |
+| `python3 simulate_spyder.py --67` | Gravity-on 6-7 gesture: the middle and rear four feet support the body while the raised front pair move up and down in alternation. |
+| `python3 simulate_spyder.py --wiggle` | From rest, moves to one side, then follows a U-shaped path back and forth: about 22 mm to either side and 35 mm down at the centre, with a 2° yaw shake. It retraces the same low arc without looping over the top; the camera faces the front. |
+| `python3 simulate_spyder.py --hello` | Raises and waves the front-right leg while the other five remain planted. |
+| `python3 simulate_spyder.py --point` | Raises and points the front-right leg while the other five remain planted. |
+| `python3 simulate_spyder.py --v-sign` | Steps the middle feet forward one at a time, then raises both front legs in a V on four supporting feet. |
+| `python3 simulate_spyder.py --foot-tap-wave` | Lifts and sets down one foot at a time, from front to rear, alternating sides. |
+| `python3 simulate_spyder.py --crab-walk` | Walks sideways on alternating tripods; `--speed 40` starts at 40 mm/s along +X. |
+| `python3 simulate_spyder.py --crab-dance` | Side-steps right and left, settles, steps into the four-foot stance, then waves both front claws. |
 | `python3 simulate_spyder.py --demo` | Moves each of the 18 joints in turn. |
 
 Add `--direct --seconds 5` to any of them to run without a window, `--screenshot previews/my_pose.png` to save an image, and `--set fr_femur_pitch=-30` (repeatable) to start a joint at an angle in degrees. Every run first prints the joint list with limits. A red message in the window warns when neighbouring legs overlap.
+
+The `--67` mode first settles on all six feet. It then lifts each middle foot 4 cm, steps it toward a position 15 cm in front of the body centre, and plants it before moving the other middle foot. Once both are down, the original front pair rise. The middle and rear feet form the four-leg stance while the raised front feet swing inward, bend upward at the knee, and keep moving in opposite phases until the window closes. The model uses estimated masses and servo strength, so this balance is a simulation result rather than a hardware guarantee.
+
+All movement flags are mutually exclusive. `--speed` controls forward walking speed for `--walk` and sideways speed for the crab modes; `--turn` applies to `--walk` and `--crab-walk`. The crab dance uses a timed side-step, so its speed is set when launched. `--v-sign` and `--crab-dance` reuse the same one-foot-at-a-time middle-leg transition as `--67`. These are simulated whole-leg gestures: with three joints per leg and no separate toes, the robot cannot form fingers or a literal V hand sign.
+
+![Spyder balanced on four feet with the front pair raised](previews/spyder_67.png)
 
 ## Joints
 
@@ -95,19 +119,21 @@ A re-export with the same geometry rebuilds as it is. If a part moved or changed
 - Every `main.stl` triangle is used once, and the rebuilt robot at zero angles matches the STL to within 0.01 mm.
 - Forward kinematics matches PyBullet on every leg, and inverse kinematics round-trips to 1e-9 m over random poses.
 - Invalid angles and unreachable foot targets are rejected.
-- It stands with its weight shared across six feet (about 2.7 N each) without drifting.
+- It stands with its weight shared across six feet (about 3.5 N each with the battery mass) without drifting.
 - The tripod gait walks and turns in the commanded direction, stays upright, and neighbouring legs do not overlap.
+- In `--67`, the two middle feet step forward one at a time. At least four feet touch the ground throughout the simulated transition. With the battery mass included, the body moves about 4 mm and remains upright after the front pair rise.
+- The new gestures complete under gravity with the intended support: six feet for the wiggle, five for each single-leg emote and tap, four after the V and claw transitions, and at least one tripod during crab movement in the checked runs. Crab steps use a gentler landing curve to keep a tripod planted during handoffs.
 
 | Simulated run (6 s, including a 1.2 s start-up) | Result | Peak servo torque |
 |---|---|---|
-| Walk at 40 mm/s | 205 mm forward, tilt 0.2° | 0.65 N m |
-| Walk at 80 mm/s | 415 mm forward, tilt 0.3° | 0.79 N m |
-| Turn at 17 deg/s | 88° with almost no drift | 0.62 N m |
+| Walk at 40 mm/s | 207 mm forward, tilt 0.2° | 0.71 N m |
+| Walk at 80 mm/s | 413 mm forward, tilt 0.3° | 0.80 N m |
+| Turn at 17 deg/s | 87° with about 185 mm of body displacement | 0.76 N m |
 
 ## Limits of this model
 
 - **The cradles still overlap the coupling.** `main.stl` has the same interference described for the single leg: the bottom plates and ring sit inside `thigh_bottom` and `leg_bottom` by up to about 1.6 mm, already 1.2 mm in the home pose, and the joint limits above ignore it. The simulation moves through it, but the printed parts would not. The cradle reliefs have not been cut.
-- **Physics results are estimates, not a hardware test.** Mass is 1.63 kg, from 55 g per servo plus printed parts at an assumed 700 kg/m³. The **battery and controller are not in the CAD**, so real torque will be higher; set `electronics_kg` in `spyder.json` once they are known. Torque is capped at an assumed 0.9 N m and speed at 5.2 rad/s, nominal MG996R figures for a servo that is still unconfirmed, and `SERVO_STIFFNESS` in `simulate_spyder.py` is illustrative. The walking peaks are already close to that cap.
+- **Physics results are estimates, not a hardware test.** The model is about 2.12 kg including the four batteries at 0.48 kg total, 55 g for each of 18 servos, and printed parts at an assumed 700 kg/m³. The battery mass is placed 30 mm above the body origin; its actual mounting position, the Raspberry Pi, and other electronics are still unmeasured. Torque is capped at an assumed 0.9 N m and speed at 5.2 rad/s, nominal MG996R figures for a servo that is still unconfirmed, and `SERVO_STIFFNESS` in `simulate_spyder.py` is illustrative. The 10-second `--67` run peaks at 0.77 N m with the new stepping transition, leaving some simulated torque margin. Real torque, foot friction, backlash, power delivery, and the missing electronics can change that result. The walking peaks are also close to the cap.
 - **Self-collision is only a warning.** Parts pass through each other in the simulation. The red message covers neighbouring legs, using convex hulls that are larger than the real parts; they first overlap with both neighbours turned about 40° towards each other, and never with one leg moving alone. Other overlaps, such as a leg against the body, are not reported.
 - Cables, screws beyond those in the CAD, servo backlash and horn centring are not modelled. The ±90° physical range of each servo depends on how its horn is fitted.
 
@@ -236,7 +262,7 @@ These are physical fitting corrections **before** millimetres are converted to m
 | Foot ground brace | X factor 0.990517 aligns both crossbars with the sideplate fittings. Other axes retain native size. |
 | Servos and remaining pieces | Original size retained; translated and rotated. |
 
-The servo is provisionally treated as MG996R-size following your description; its identity is **not confirmed**. TowerPro lists a nominal 40.7 × 19.7 × 42.9 mm body for the [MG996R](https://torqpro.com/product/mg996r/). The supplied servo mesh, including ears and spline, remains the fitting reference.
+The supplied STL was described as dimensioned around a Deao 30 kg·cm servo. The servo planned for the new build is still unconfirmed; the physics model currently uses MG996R-like strength. TowerPro lists a nominal 40.7 × 19.7 × 42.9 mm body for the [MG996R](https://torqpro.com/product/mg996r/). The supplied servo mesh, including ears and spline, remains the fitting reference.
 
 Remaining uncertainties:
 
